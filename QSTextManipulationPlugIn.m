@@ -9,35 +9,19 @@
 #import "QSTextManipulationPlugIn.h"
 #define kQSTextAppendAction @"QSTextAppendAction"
 #define kQSTextPrependAction @"QSTextPrependAction"
+#define kQSLineRefEditAction @"QSLineRefEditAction"
 #define textTypes [NSArray arrayWithObjects:@"'TEXT'", @"txt", @"sh", @"pl", @"rb", @"html", @"htm", nil]
 #define richTextTypes [NSArray arrayWithObjects:@"rtf", @"doc", @"rtfd", nil]
 
-//@interface NSAttributedString (QSTextManipulationPlugIn)
-//
-//@end
-//
-//@implementation NSAttributedString (QSTextManipulationPlugIn)
-
-//
-//
-//@end
-
-
 @implementation QSTextManipulationPlugIn
 
-- (NSArray *)validActionsForDirectObject:(QSObject *)dObject indirectObject:(QSObject *)iObject {
-  if ([dObject containsType:QSFilePathType])
-		return nil;
-  return [NSArray arrayWithObjects:kQSTextAppendAction, kQSTextPrependAction, nil];
-}
-
 - (NSArray *)validIndirectObjectsForAction:(NSString *)action directObject:(QSObject *)dObject {
-	if ([action isEqualToString:@"QSTextPrependAction"] || [action isEqualToString:@"QSTextAppendAction"])
-		return nil;
-	QSObject *textObject = [QSObject textProxyObjectWithDefaultValue:@""];
-	return [NSArray arrayWithObject:textObject]; //[QSLibarrayForType:NSFilenamesPboardType];
+	if ([action isEqualToString:kQSLineRefEditAction]) {
+    // for the Change To... action
+	return [NSArray arrayWithObject:[QSObject textProxyObjectWithDefaultValue:[dObject stringValue]]]; 
+    }
+    return nil;
 }
-
 
 
 - (QSObject *)prependObject:(QSObject *)dObject toObject:(QSObject *)iObject {
@@ -48,7 +32,21 @@
   
 }
 - (QSObject *)appendObject:(QSObject *)dObject toObject:(QSObject *)iObject atBeginning:(BOOL)atBeginning {
-	
+	NSString *newLine = nil;
+    
+    
+    // resolve proxy objects
+    if ([[dObject primaryType] isEqualToString:QSProxyType]) {
+        dObject = (QSObject *)[dObject resolvedObject];
+    }
+    if ([[dObject primaryType] isEqualToString:QSFilePathType]) {
+        newLine = [dObject singleFilePath];
+    } else if([[dObject primaryType] isEqualToString:QSTextType]) {
+        newLine = [dObject objectForType:QSTextType];
+    } else {
+        newLine = [dObject stringValue];
+    }
+    
 	if ([iObject containsType:@"QSLineReferenceType"]) {
 		
 		NSDictionary *reference = [iObject objectForType:@"QSLineReferenceType"];
@@ -56,56 +54,58 @@
 		NSString *string = [NSString stringWithContentsOfFile:file];
 		
 		NSMutableArray *lines = [[[string lines] mutableCopy] autorelease]; 		
-		int lineIndex = [[reference objectForKey:@"line"] intValue];
-		if (atBeginning) lineIndex--;
-		[lines insertObject:[dObject stringValue] atIndex:lineIndex];
+		NSUInteger lineIndex = [[reference objectForKey:@"line"] unsignedIntegerValue];
+		if (atBeginning) {
+            lineIndex--;
+        }
+		[lines insertObject:newLine atIndex:lineIndex];
 		//NSLog(@"iObject %@ %@", [dObject objectForType:@"QSLineReferenceType"] , lines);
-//		
-		[[lines componentsJoinedByString:@"\r"] writeToFile:file atomically:NO];
+        //		
+		[[lines componentsJoinedByString:@"\n"] writeToFile:file atomically:NO];
 		
 		return [QSObject fileObjectWithPath:file];
 	} else {
 		NSString *path = [iObject singleFilePath];
 		NSString *type = [[NSFileManager defaultManager] typeOfFile:path];
-    NSLog(@"type %@", type);
-    if ([richTextTypes containsObject:type]) {
-      NSDictionary *docAttributes = nil;
-      NSError *error = nil;
-      NSMutableAttributedString *astring = [[NSMutableAttributedString alloc] initWithURL:[NSURL fileURLWithPath:path]
-                                                                                  options:nil
-                                                                       documentAttributes:&docAttributes
-                                                                                    error:&error];
-      NSDictionary *attributes = [astring attributesAtIndex:atBeginning ? 0 : [astring length]-1
-                                             effectiveRange:nil];
-      NSAttributedString *newlineString = [[[NSAttributedString alloc] initWithString:@"\n" attributes:attributes] autorelease];
-      NSAttributedString *appendString = [[[NSAttributedString alloc] initWithString:[dObject stringValue]  attributes:attributes] autorelease];
-      
-			NSString *text = [NSString stringWithContentsOfFile:path];
+        
+        
+        if ([richTextTypes containsObject:type]) {
+            NSDictionary *docAttributes = nil;
+            NSError *error = nil;
+            NSMutableAttributedString *astring = [[NSMutableAttributedString alloc] initWithURL:[NSURL fileURLWithPath:path]
+                                                                                        options:nil
+                                                                             documentAttributes:&docAttributes
+                                                                                          error:&error];
+            NSDictionary *attributes = [astring attributesAtIndex:atBeginning ? 0 : [astring length]-1
+                                                   effectiveRange:nil];
+            NSAttributedString *newlineString = [[[NSAttributedString alloc] initWithString:@"\n" attributes:attributes] autorelease];
+            NSAttributedString *appendString = [[[NSAttributedString alloc] initWithString:newLine  attributes:attributes] autorelease];
+            
 			if (atBeginning) {
-        [astring insertAttributedString:newlineString atIndex:0];
-        [astring insertAttributedString:appendString atIndex:0];
+                [astring insertAttributedString:newlineString atIndex:0];
+                [astring insertAttributedString:appendString atIndex:0];
 			} else {
 				unichar lastChar = [[astring string] characterAtIndex:[astring length] - 1];
 				BOOL newlineAtEnd = lastChar == '\r' || lastChar == '\n';
-        if (!newlineAtEnd) [astring appendAttributedString:newlineString];
-        [astring appendAttributedString:appendString];
-        if (newlineAtEnd) [astring appendAttributedString:newlineString];
-      }
-      
-      NSFileWrapper *wrapper = [astring fileWrapperFromRange:NSMakeRange(0, [astring length])
-                                          documentAttributes:docAttributes error:&error];
-      
-      if (!error)
-        [wrapper writeToFile:path atomically:NO updateFilenames:YES];
-      
-    } else if ([textTypes containsObject:type]) {    
+                if (!newlineAtEnd) [astring appendAttributedString:newlineString];
+                [astring appendAttributedString:appendString];
+                if (newlineAtEnd) [astring appendAttributedString:newlineString];
+            }
+            
+            NSFileWrapper *wrapper = [astring fileWrapperFromRange:NSMakeRange(0, [astring length])
+                                                documentAttributes:docAttributes error:&error];
+            
+            if (!error)
+                [wrapper writeToFile:path atomically:NO updateFilenames:YES];
+            
+        } else if ([textTypes containsObject:type]) {    
 			NSString *text = [NSString stringWithContentsOfFile:path];
 			if (atBeginning) {
-				text = [NSString stringWithFormat:@"%@\n%@", [dObject stringValue] , text];  
+				text = [NSString stringWithFormat:@"%@\n%@", newLine , text];  
 			} else {
 				unichar lastChar = [text characterAtIndex:[text length] -1];
 				BOOL newlineAtEnd = lastChar == '\r' || lastChar == '\n';
-				text = [NSString stringWithFormat:newlineAtEnd?@"%@%@\n":@"%@\n%@", text, [dObject stringValue]];
+				text = [NSString stringWithFormat:newlineAtEnd?@"%@%@\n":@"%@\n%@", text, newLine];
 			}
 			[text writeToFile:path atomically:NO];
 		} else {
@@ -116,12 +116,10 @@
 }
 
 
-
-
 - (QSObject *)deleteLineReference:(QSObject *)dObject {
 	NSString *file = [[[dObject objectForType:@"QSLineReferenceType"] objectForKey:@"path"] stringByStandardizingPath];
 	NSNumber *line = [[dObject objectForType:@"QSLineReferenceType"] objectForKey:@"line"];
-	int lineNum = [line intValue] -1;
+	NSUInteger lineNum = [line unsignedIntegerValue] -1;
 	
 	NSString *string = [NSString stringWithContentsOfFile:file];
 	
@@ -144,7 +142,7 @@
 - (QSObject *)changeLineReference:(QSObject *)dObject to:(QSObject *)iObject {
 	NSString *file = [[[dObject objectForType:@"QSLineReferenceType"] objectForKey:@"path"] stringByStandardizingPath];
 	NSNumber *line = [[dObject objectForType:@"QSLineReferenceType"] objectForKey:@"line"];
-	int lineNum = [line intValue] -1;
+	NSUInteger lineNum = [line unsignedIntegerValue] -1;
 	
 	NSString *replacement = [iObject stringValue];
 	
@@ -153,7 +151,6 @@
 	
 	
 	NSString *fileLine = [lines objectAtIndex:lineNum];
-	NSLog(@"\r%@\r%@", [dObject stringValue] , fileLine);
 	if ([[dObject stringValue] isEqualToString:fileLine]) {
 		[lines replaceObjectAtIndex:lineNum withObject:replacement];
 		[[lines componentsJoinedByString:@"\n"] writeToFile:file atomically:NO];
@@ -163,7 +160,6 @@
 	}
 	return [QSObject fileObjectWithPath:file];
 }
-
 
 
 @end
