@@ -16,9 +16,10 @@
 @implementation QSTextManipulationPlugIn
 
 - (NSArray *)validIndirectObjectsForAction:(NSString *)action directObject:(QSObject *)dObject {
+
+    // for the Change To... select the current line to be changed
 	if ([action isEqualToString:kQSLineRefEditAction]) {
-    // for the Change To... action
-	return [NSArray arrayWithObject:[QSObject textProxyObjectWithDefaultValue:[dObject stringValue]]]; 
+        return [NSArray arrayWithObject:[QSObject textProxyObjectWithDefaultValue:[dObject stringValue]]]; 
     }
     return nil;
 }
@@ -32,13 +33,10 @@
   
 }
 - (QSObject *)appendObject:(QSObject *)dObject toObject:(QSObject *)iObject atBeginning:(BOOL)atBeginning {
+
 	NSString *newLine = nil;
     
-    
-    // resolve proxy objects
-    if ([[dObject primaryType] isEqualToString:QSProxyType]) {
-        dObject = (QSObject *)[dObject resolvedObject];
-    }
+    // get the new line - file path for files or text (else string value - last case)
     if ([[dObject primaryType] isEqualToString:QSFilePathType]) {
         newLine = [dObject singleFilePath];
     } else if([[dObject primaryType] isEqualToString:QSTextType]) {
@@ -47,6 +45,7 @@
         newLine = [dObject stringValue];
     }
     
+    // if we're within a file (QSLineReferenceType file)
 	if ([iObject containsType:@"QSLineReferenceType"]) {
 		
 		NSDictionary *reference = [iObject objectForType:@"QSLineReferenceType"];
@@ -59,8 +58,7 @@
             lineIndex--;
         }
 		[lines insertObject:newLine atIndex:lineIndex];
-		//NSLog(@"iObject %@ %@", [dObject objectForType:@"QSLineReferenceType"] , lines);
-        //		
+
 		[[lines componentsJoinedByString:@"\n"] writeToFile:file atomically:NO];
 		
 		return [QSObject fileObjectWithPath:file];
@@ -68,7 +66,7 @@
 		NSString *path = [iObject singleFilePath];
 		NSString *type = [[NSFileManager defaultManager] typeOfFile:path];
         
-        
+        // rich text
         if ([richTextTypes containsObject:type]) {
             NSDictionary *docAttributes = nil;
             NSError *error = nil;
@@ -128,14 +126,14 @@
 	NSMutableArray *lines = [[[string componentsSeparatedByString:@"\r"] mutableCopy] autorelease];
 	
 	NSString *fileLine = [lines objectAtIndex:lineNum];
-	//NSLog(@"\r%@\r%@", [dObject stringValue] , fileLine);
+
 	if ([[dObject stringValue] isEqualToString:fileLine]) {
 		[lines removeObjectAtIndex:lineNum];
 		[[lines componentsJoinedByString:@"\n"] writeToFile:file atomically:NO];
 	} else {
 		NSBeep();
-		QSShowLargeType(@"Contents of file have changed. Line was not deleted.");
-	}
+        QSShowNotifierWithAttributes([NSDictionary dictionaryWithObjectsAndKeys:@"QSTextManipulationNotification", QSNotifierType, [QSResourceManager imageNamed:@"com.blacktree.quicksilver"], QSNotifierIcon, @"Text Manipulation", QSNotifierTitle, @"Contents of file have changed. Line was not deleted.", QSNotifierText, nil]);
+    }
 	return nil;
 }
 
@@ -156,7 +154,7 @@
 		[[lines componentsJoinedByString:@"\n"] writeToFile:file atomically:NO];
 	} else {
 		NSBeep();
-		QSShowLargeType(@"Contents of file have changed. Change was abandoned.");
+        QSShowNotifierWithAttributes([NSDictionary dictionaryWithObjectsAndKeys:@"QSTextManipulationNotification", QSNotifierType, [QSResourceManager imageNamed:@"com.blacktree.quicksilver"], QSNotifierIcon, @"Text Manipulation", QSNotifierTitle, @"Contents of file have changed. Change was abandoned.", QSNotifierText, nil]);
 	}
 	return [QSObject fileObjectWithPath:file];
 }
