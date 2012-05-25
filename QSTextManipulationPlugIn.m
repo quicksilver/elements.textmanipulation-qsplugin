@@ -38,7 +38,7 @@
     
     // get the new line - file path for files or text (else string value - last case)
     if ([[dObject primaryType] isEqualToString:QSFilePathType]) {
-        newLine = [dObject singleFilePath];
+        newLine = [[dObject singleFilePath] stringByAbbreviatingWithTildeInPath];
     } else if([[dObject primaryType] isEqualToString:QSTextType]) {
         newLine = [dObject objectForType:QSTextType];
     } else {
