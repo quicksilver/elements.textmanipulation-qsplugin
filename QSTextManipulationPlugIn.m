@@ -10,6 +10,8 @@
 #define kQSTextAppendAction @"QSTextAppendAction"
 #define kQSTextPrependAction @"QSTextPrependAction"
 #define kQSLineRefEditAction @"QSLineRefEditAction"
+#define kQSTextAppendReverseAction @"QSTextAppendReverseAction"
+#define kQSTextPrependReverseAction @"QSTextPrependReverseAction"
 #define textTypes [NSArray arrayWithObjects:@"'TEXT'", @"txt", @"sh", @"pl", @"rb", @"html", @"htm", nil]
 #define richTextTypes [NSArray arrayWithObjects:@"rtf", @"doc", @"rtfd", nil]
 
@@ -20,6 +22,8 @@
     // for the Change To... select the current line to be changed
 	if ([action isEqualToString:kQSLineRefEditAction]) {
         return [NSArray arrayWithObject:[QSObject textProxyObjectWithDefaultValue:[dObject stringValue]]]; 
+    } else if ([action isEqualToString:kQSTextAppendReverseAction] || [action isEqualToString:kQSTextPrependReverseAction]) {
+        return [NSArray arrayWithObject:[QSObject textProxyObjectWithDefaultValue:@""]];
     }
     return nil;
 }
