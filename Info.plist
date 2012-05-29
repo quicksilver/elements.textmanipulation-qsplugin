@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleVersion</key>
-	<string>77</string>
+	<string>78</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0.0</string>
 	<key>QSActions</key>
@@ -36,6 +36,8 @@
 			<false/>
 			<key>name</key>
 			<string>Delete Line</string>
+			<key>validatesObjects</key>
+			<string>YES</string>
 		</dict>
 		<key>QSLineRefEditAction</key>
 		<dict>
@@ -49,6 +51,8 @@
 			</array>
 			<key>enabled</key>
 			<false/>
+			<key>validatesObjects</key>
+			<string>YES</string>
 			<key>name</key>
 			<string>Change To...</string>
 		</dict>
@@ -70,6 +74,8 @@
 		<dict>
 			<key>actionClass</key>
 			<string>QSTextManipulationPlugIn</string>
+			<key>validatesObjects</key>
+			<string>YES</string>
 			<key>actionSelector</key>
 			<string>appendObject:toObject:</string>
 			<key>directFileTypes</key>
@@ -110,6 +116,8 @@
 		<dict>
 			<key>actionClass</key>
 			<string>QSTextManipulationPlugIn</string>
+			<key>validatesObjects</key>
+			<string>YES</string>
 			<key>actionSelector</key>
 			<string>prependObject:toObject:</string>
 			<key>directFileTypes</key>
