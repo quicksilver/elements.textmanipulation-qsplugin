@@ -108,7 +108,7 @@
                 
             } else if ([textTypes containsObject:type]) {    
                 NSString *text = [NSString stringWithContentsOfFile:path];
-                if (atBeginning) {
+                if (atBeginning || ![text length]) {
                     text = [NSString stringWithFormat:@"%@\n%@", newLine , text];  
                 } else {
                     unichar lastChar = [text characterAtIndex:[text length] -1];

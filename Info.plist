@@ -167,6 +167,9 @@ Note that Quicksilver has the ability to enter into text files (using → or /) 
 &lt;li&gt;[Some Text] ⇥ Append To... ⇥ [Some File]&lt;/li&gt;
 &lt;/ul&gt;
 
+&lt;p&gt;You should note that both these actions can use Quicksilver&apos;s &apos;smart&apos; ability to place any item, object or file inside a text file. If you append an image to a text file, the path of the image is added, or similarly for web addresses (URLs). When entering a text file (→ or /), these lines are automatically resolved by Quicksilver into the original file, URL etc.&lt;br /&gt;
+This gives you a convenient way to store any file or piece of information within a text file, using nothing but Quicksilver.&lt;/p&gt;
+
 &lt;h4&gt;Prepend Text... and Prepend To...&lt;/h4&gt;
 &lt;p&gt;This action works in a similar manner to the &apos;Append&apos; actions, but puts a line of text at the start of the file. The action is also reversible.&lt;/p&gt;
 
