@@ -138,7 +138,7 @@
 		NSBeep();
         QSShowNotifierWithAttributes([NSDictionary dictionaryWithObjectsAndKeys:@"QSTextManipulationNotification", QSNotifierType, [QSResourceManager imageNamed:@"com.blacktree.quicksilver"], QSNotifierIcon, @"Text Manipulation", QSNotifierTitle, @"Contents of file have changed. Line was not deleted.", QSNotifierText, nil]);
     }
-	return nil;
+	return [QSObject fileObjectWithPath:file];
 }
 
 - (QSObject *)changeLineReference:(QSObject *)dObject to:(QSObject *)iObject {
