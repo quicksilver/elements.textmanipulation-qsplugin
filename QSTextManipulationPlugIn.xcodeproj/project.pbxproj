@@ -3,27 +3,26 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 44;
+	objectVersion = 42;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7F0BDCAF07FC907C002CBDDF /* QSInterface.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F35FF3F07F9ACD90056051D /* QSInterface.framework */; };
+		7F0BDCB007FC9091002CBDDF /* QSEffects.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F35FF3D07F9ACD90056051D /* QSEffects.framework */; };
+		7F35FF4007F9ACD90056051D /* QSCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F35FF3C07F9ACD90056051D /* QSCore.framework */; };
+		7F35FF4207F9ACD90056051D /* QSFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F35FF3E07F9ACD90056051D /* QSFoundation.framework */; };
 		8D1AC9700486D14A00FE50C9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD92D38A0106425D02CA0E72 /* Cocoa.framework */; };
 		E1EAB046068128A200774DFF /* QSTextManipulationPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = E1EAB045068128A200774DFF /* QSTextManipulationPlugIn.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		14A8CFE310CE4C3D003857E3 /* QSPlugIn.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = QSPlugIn.xcconfig; sourceTree = "<group>"; };
-		14A8CFE610CE4C4F003857E3 /* Common.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Common.xcconfig; sourceTree = "<group>"; };
-		14A8CFE910CE4C68003857E3 /* QSPlugIn_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSPlugIn_Prefix.pch; sourceTree = "<group>"; };
-		14A8CFEC10CE4C83003857E3 /* Developer.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Developer.xcconfig; sourceTree = "<group>"; };
-		14A8CFED10CE4C9A003857E3 /* QSPlugIn_Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = QSPlugIn_Debug.xcconfig; sourceTree = "<group>"; };
-		14A8CFEE10CE4C9A003857E3 /* QSPlugIn_Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = QSPlugIn_Release.xcconfig; sourceTree = "<group>"; };
 		32DBCF980370C29C00C91783 /* QSTextManipulationPlugIn_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QSTextManipulationPlugIn_Prefix.pch; sourceTree = "<group>"; };
-		4D0C0DC20E0FCED80027D189 /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
-		4D0C0DC60E0FCED80027D189 /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
-		7FC729890CFC6168004A8A1A /* element.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = element.xml; sourceTree = "<group>"; };
+		7F35FF3C07F9ACD90056051D /* QSCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QSCore.framework; sourceTree = QSFrameworks; };
+		7F35FF3D07F9ACD90056051D /* QSEffects.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QSEffects.framework; sourceTree = QSFrameworks; };
+		7F35FF3E07F9ACD90056051D /* QSFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QSFoundation.framework; sourceTree = QSFrameworks; };
+		7F35FF3F07F9ACD90056051D /* QSInterface.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QSInterface.framework; sourceTree = QSFrameworks; };
 		8D1AC9730486D14A00FE50C9 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		8D1AC9740486D14A00FE50C9 /* Text Manipulation.qsplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Text Manipulation.qsplugin"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D1AC9740486D14A00FE50C9 /* Text Manipulation Actions.qsplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Text Manipulation Actions.qsplugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD92D38A0106425D02CA0E72 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		E1EAB045068128A200774DFF /* QSTextManipulationPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = QSTextManipulationPlugIn.m; sourceTree = "<group>"; };
 		E1EAB047068128A800774DFF /* QSTextManipulationPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = QSTextManipulationPlugIn.h; sourceTree = "<group>"; };
@@ -35,6 +34,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D1AC9700486D14A00FE50C9 /* Cocoa.framework in Frameworks */,
+				7F35FF4007F9ACD90056051D /* QSCore.framework in Frameworks */,
+				7F35FF4207F9ACD90056051D /* QSFoundation.framework in Frameworks */,
+				7F0BDCAF07FC907C002CBDDF /* QSInterface.framework in Frameworks */,
+				7F0BDCB007FC9091002CBDDF /* QSEffects.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,8 +47,6 @@
 		0259C574FE90428111CA0C5A /* QSTextManipulationPlugIn */ = {
 			isa = PBXGroup;
 			children = (
-				4D0C0DC00E0FCED80027D189 /* Configuration */,
-				7FC729890CFC6168004A8A1A /* element.xml */,
 				32DBCF9E0370C38000C91783 /* Classes */,
 				32DBCF9F0370C38200C91783 /* Other Sources */,
 				0259C582FE90428111CA0C5A /* Resources */,
@@ -66,7 +67,7 @@
 		1ED78706FE9D4A0611CA0C5A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D1AC9740486D14A00FE50C9 /* Text Manipulation.qsplugin */,
+				8D1AC9740486D14A00FE50C9 /* Text Manipulation Actions.qsplugin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -75,6 +76,9 @@
 			isa = PBXGroup;
 			children = (
 				DD92D38A0106425D02CA0E72 /* Cocoa.framework */,
+				7F35FF3C07F9ACD90056051D /* QSCore.framework */,
+				7F35FF3E07F9ACD90056051D /* QSFoundation.framework */,
+				7FC20C8107FB741700FDD3CA /* Other Frameworks */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -96,27 +100,21 @@
 			name = "Other Sources";
 			sourceTree = "<group>";
 		};
-		4D0C0DC00E0FCED80027D189 /* Configuration */ = {
+		7FC20C8107FB741700FDD3CA /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				14A8CFED10CE4C9A003857E3 /* QSPlugIn_Debug.xcconfig */,
-				14A8CFEE10CE4C9A003857E3 /* QSPlugIn_Release.xcconfig */,
-				14A8CFEC10CE4C83003857E3 /* Developer.xcconfig */,
-				14A8CFE910CE4C68003857E3 /* QSPlugIn_Prefix.pch */,
-				14A8CFE610CE4C4F003857E3 /* Common.xcconfig */,
-				14A8CFE310CE4C3D003857E3 /* QSPlugIn.xcconfig */,
-				4D0C0DC20E0FCED80027D189 /* Debug.xcconfig */,
-				4D0C0DC60E0FCED80027D189 /* Release.xcconfig */,
+				7F35FF3D07F9ACD90056051D /* QSEffects.framework */,
+				7F35FF3F07F9ACD90056051D /* QSInterface.framework */,
 			);
-			path = Configuration;
-			sourceTree = QS_SOURCE_ROOT;
+			name = "Other Frameworks";
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8D1AC9600486D14A00FE50C9 /* Text Manipulation */ = {
+		8D1AC9600486D14A00FE50C9 /* Text Manipulation Actions */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7FFF257F085E488700266176 /* Build configuration list for PBXNativeTarget "Text Manipulation" */;
+			buildConfigurationList = 7FFF257F085E488700266176 /* Build configuration list for PBXNativeTarget "Text Manipulation Actions" */;
 			buildPhases = (
 				8D1AC9660486D14A00FE50C9 /* Resources */,
 				8D1AC96A0486D14A00FE50C9 /* Sources */,
@@ -127,10 +125,10 @@
 			);
 			dependencies = (
 			);
-			name = "Text Manipulation";
+			name = "Text Manipulation Actions";
 			productInstallPath = "$(HOME)/Developer/Palettes";
 			productName = QSTextManipulationPlugIn;
-			productReference = 8D1AC9740486D14A00FE50C9 /* Text Manipulation.qsplugin */;
+			productReference = 8D1AC9740486D14A00FE50C9 /* Text Manipulation Actions.qsplugin */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -138,18 +136,14 @@
 /* Begin PBXProject section */
 		0259C573FE90428111CA0C5A /* Project object */ = {
 			isa = PBXProject;
-			buildConfigurationList = 7FFF2583085E488700266176 /* Build configuration list for PBXProject "TextManipulationElement" */;
-			compatibilityVersion = "Xcode 3.0";
-			developmentRegion = English;
+			buildConfigurationList = 7FFF2583085E488700266176 /* Build configuration list for PBXProject "QSTextManipulationPlugIn" */;
+			compatibilityVersion = "Xcode 2.4";
 			hasScannedForEncodings = 1;
-			knownRegions = (
-				en,
-			);
 			mainGroup = 0259C574FE90428111CA0C5A /* QSTextManipulationPlugIn */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8D1AC9600486D14A00FE50C9 /* Text Manipulation */,
+				8D1AC9600486D14A00FE50C9 /* Text Manipulation Actions */,
 			);
 		};
 /* End PBXProject section */
@@ -167,14 +161,14 @@
 /* Begin PBXShellScriptBuildPhase section */
 		E1022B2806B3475D00299BEC /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "$SRCROOT/bltrversion $INFOPLIST_FILE";
 		};
@@ -192,56 +186,117 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		7FFF2580085E488700266176 /* Debug */ = {
+		7FFF2580085E488700266176 /* Development */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 14A8CFED10CE4C9A003857E3 /* QSPlugIn_Debug.xcconfig */;
 			buildSettings = {
-				PRODUCT_NAME = "Text Manipulation";
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(QSFrameworks)";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = QSTextManipulationPlugIn_Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
+				OTHER_LDFLAGS = "-bundle";
+				PRODUCT_NAME = "Text Manipulation Actions";
+				WRAPPER_EXTENSION = qsplugin;
+				ZERO_LINK = YES;
 			};
-			name = Debug;
+			name = Development;
 		};
 		7FFF2581085E488700266176 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 14A8CFEE10CE4C9A003857E3 /* QSPlugIn_Release.xcconfig */;
 			buildSettings = {
-				PRODUCT_NAME = "Text Manipulation";
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(QSFrameworks)";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = QSTextManipulationPlugIn_Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
+				OTHER_LDFLAGS = "-bundle";
+				PRODUCT_NAME = "Text Manipulation Actions";
+				WRAPPER_EXTENSION = qsplugin;
+				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
-		7FFF2584085E488700266176 /* Debug */ = {
+		7FFF2582085E488700266176 /* Default */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4D0C0DC20E0FCED80027D189 /* Debug.xcconfig */;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					/Applications/Quicksilver.app/Contents/Frameworks,
+					/Volumes/Lore/Forge/Build,
+				);
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = QSTextManipulationPlugIn_Prefix.pch;
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Developer/Palettes";
+				OTHER_LDFLAGS = "-bundle";
+				PRODUCT_NAME = "Text Manipulation Actions";
+				WRAPPER_EXTENSION = qsplugin;
 			};
-			name = Debug;
+			name = Default;
+		};
+		7FFF2584085E488700266176 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Development;
 		};
 		7FFF2585085E488700266176 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4D0C0DC60E0FCED80027D189 /* Release.xcconfig */;
 			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 			};
 			name = Release;
+		};
+		7FFF2586085E488700266176 /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Default;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		7FFF257F085E488700266176 /* Build configuration list for PBXNativeTarget "Text Manipulation" */ = {
+		7FFF257F085E488700266176 /* Build configuration list for PBXNativeTarget "Text Manipulation Actions" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				7FFF2580085E488700266176 /* Debug */,
+				7FFF2580085E488700266176 /* Development */,
 				7FFF2581085E488700266176 /* Release */,
+				7FFF2582085E488700266176 /* Default */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Default;
 		};
-		7FFF2583085E488700266176 /* Build configuration list for PBXProject "TextManipulationElement" */ = {
+		7FFF2583085E488700266176 /* Build configuration list for PBXProject "QSTextManipulationPlugIn" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				7FFF2584085E488700266176 /* Debug */,
+				7FFF2584085E488700266176 /* Development */,
 				7FFF2585085E488700266176 /* Release */,
+				7FFF2586085E488700266176 /* Default */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Default;
 		};
 /* End XCConfigurationList section */
 	};
