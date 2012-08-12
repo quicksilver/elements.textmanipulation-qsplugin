@@ -13,7 +13,7 @@
 #define kQSLineRefDeleteAction @"QSLineRefDeleteAction"
 #define kQSTextAppendReverseAction @"QSTextAppendReverseAction"
 #define kQSTextPrependReverseAction @"QSTextPrependReverseAction"
-#define textTypes [NSArray arrayWithObjects:@"'TEXT'", @"txt", @"sh", @"pl", @"rb", @"html", @"htm", nil]
+#define textTypes [NSArray arrayWithObjects:@"'TEXT'", @"txt", @"sh", @"pl", @"rb", @"html", @"htm",@"md",@"markdown", @"mdown", @"mkdn", nil]
 #define richTextTypes [NSArray arrayWithObjects:@"rtf", @"doc", @"rtfd", nil]
 
 @implementation QSTextManipulationPlugIn
@@ -32,7 +32,21 @@
 - (NSArray *)validActionsForDirectObject:(QSObject *)dObject indirectObject:(QSObject *)iObject {
     // most methods are only set to work for 1 direct object
     if ([dObject count] == 1) {
+        
         return [NSArray arrayWithObjects:kQSTextAppendReverseAction,kQSTextPrependReverseAction,kQSLineRefEditAction,kQSLineRefDeleteAction,nil];
+        
+        // In the future, we may wish to make the Append Text... and Prepend Text... actions available for ALL files of type text
+        
+        /* NSArray *validActions;
+        NSString *type = [[NSFileManager defaultManager] UTIOfFile:[dObject singleFilePath]];
+        if (UTTypeConformsTo((CFStringRef)type, kUTTypeText)) {
+            validActions = [NSArray arrayWithObjects:kQSTextAppendReverseAction,kQSTextPrependReverseAction,kQSLineRefEditAction,kQSLineRefDeleteAction,nil];
+        } else {
+                 validActions = [NSArray arrayWithObjects:kQSLineRefDeleteAction,kQSLineRefEditAction,nil];
+
+             }
+        return validActions; */
+         
     }
     return nil;
 }
@@ -62,8 +76,9 @@
             
             NSDictionary *reference = [iObject objectForType:@"QSLineReferenceType"];
             NSString *file = [[reference objectForKey:@"path"] stringByStandardizingPath];
-            NSString *string = [NSString stringWithContentsOfFile:file];
-            
+            NSStringEncoding encoding;
+
+            NSString *string = [NSString stringWithContentsOfFile:file usedEncoding:&encoding error:nil];
             NSMutableArray *lines = [[[string lines] mutableCopy] autorelease]; 		
             NSUInteger lineIndex = [[reference objectForKey:@"line"] unsignedIntegerValue];
             if (atBeginning) {
@@ -71,7 +86,7 @@
             }
             [lines insertObject:newLine atIndex:lineIndex];
             
-            [[lines componentsJoinedByString:@"\n"] writeToFile:file atomically:NO];
+            [[lines componentsJoinedByString:@"\n"] writeToFile:file atomically:NO encoding:encoding error:nil];
         } else {
             NSString *path = [iObject singleFilePath];
             NSString *type = [[NSFileManager defaultManager] typeOfFile:path];
@@ -106,8 +121,9 @@
                 if (!error)
                     [wrapper writeToFile:path atomically:NO updateFilenames:YES];
                 
-            } else if ([textTypes containsObject:type]) {    
-                NSString *text = [NSString stringWithContentsOfFile:path];
+            } else if ([textTypes containsObject:type]) {
+                NSStringEncoding encoding;
+                NSString *text = [NSString stringWithContentsOfFile:path usedEncoding:&encoding error:nil];
                 if (atBeginning || ![text length]) {
                     text = [NSString stringWithFormat:@"%@\n%@", newLine , text];  
                 } else {
@@ -115,7 +131,7 @@
                     BOOL newlineAtEnd = lastChar == '\r' || lastChar == '\n';
                     text = [NSString stringWithFormat:newlineAtEnd?@"%@%@\n":@"%@\n%@", text, newLine];
                 }
-                [text writeToFile:path atomically:NO];
+                [text writeToFile:path atomically:NO encoding:encoding error:nil];
             } else {
                 NSBeep();  
             }
@@ -136,7 +152,8 @@
     NSNumber *line = [[dObject objectForType:@"QSLineReferenceType"] objectForKey:@"line"];
     NSUInteger lineNum = [line unsignedIntegerValue] -1;
     
-    NSString *string = [NSString stringWithContentsOfFile:file];
+    NSStringEncoding encoding;
+    NSString *string = [NSString stringWithContentsOfFile:file usedEncoding:&encoding error:nil];
     
     string = [string stringByReplacing:@"\n" with:@"\r"];
     
@@ -146,7 +163,7 @@
     
     if ([[dObject stringValue] isEqualToString:fileLine]) {
         [lines removeObjectAtIndex:lineNum];
-        [[lines componentsJoinedByString:@"\n"] writeToFile:file atomically:NO];
+        [[lines componentsJoinedByString:@"\n"] writeToFile:file atomically:NO encoding:encoding error:nil];
     } else {
         NSBeep();
         QSShowNotifierWithAttributes([NSDictionary dictionaryWithObjectsAndKeys:@"QSTextManipulationNotification", QSNotifierType, [QSResourceManager imageNamed:@"com.blacktree.quicksilver"], QSNotifierIcon, @"Text Manipulation", QSNotifierTitle, @"Contents of file have changed. Line was not deleted.", QSNotifierText, nil]);
@@ -161,14 +178,15 @@
     
     NSString *replacement = [iObject stringValue];
     
-    NSString *string = [NSString stringWithContentsOfFile:file];
+    NSStringEncoding encoding;
+    NSString *string = [NSString stringWithContentsOfFile:file usedEncoding:&encoding error:nil];
     NSMutableArray *lines = [[[string lines] mutableCopy] autorelease];
     
     
     NSString *fileLine = [lines objectAtIndex:lineNum];
     if ([[dObject stringValue] isEqualToString:fileLine]) {
         [lines replaceObjectAtIndex:lineNum withObject:replacement];
-        [[lines componentsJoinedByString:@"\n"] writeToFile:file atomically:NO];
+        [[lines componentsJoinedByString:@"\n"] writeToFile:file atomically:NO encoding:encoding error:nil];
     } else {
         NSBeep();
         QSShowNotifierWithAttributes([NSDictionary dictionaryWithObjectsAndKeys:@"QSTextManipulationNotification", QSNotifierType, [QSResourceManager imageNamed:@"com.blacktree.quicksilver"], QSNotifierIcon, @"Text Manipulation", QSNotifierTitle, @"Contents of file have changed. Change was abandoned.", QSNotifierText, nil]);

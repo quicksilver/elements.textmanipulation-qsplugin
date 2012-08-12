@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
+	<key>CFBundleDisplayName</key>
+	<string>Text Manipulation Actions</string>
 	<key>CFBundleExecutable</key>
 	<string>Text Manipulation</string>
 	<key>CFBundleIdentifier</key>
@@ -12,14 +14,12 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>Text Manipulation Actions</string>
-	<key>CFBundleDisplayName</key>
-	<string>Text Manipulation Actions</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
-	<key>CFBundleVersion</key>
-	<string>78</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.0</string>
+	<string>1.1.0</string>
+	<key>CFBundleVersion</key>
+	<string>7E</string>
 	<key>QSActions</key>
 	<dict>
 		<key>QSLineRefDeleteAction</key>
@@ -51,10 +51,10 @@
 			</array>
 			<key>enabled</key>
 			<false/>
-			<key>validatesObjects</key>
-			<string>YES</string>
 			<key>name</key>
 			<string>Change To...</string>
+			<key>validatesObjects</key>
+			<string>YES</string>
 		</dict>
 		<key>QSTextAppendAction</key>
 		<dict>
@@ -76,8 +76,6 @@
 		<dict>
 			<key>actionClass</key>
 			<string>QSTextManipulationPlugIn</string>
-			<key>validatesObjects</key>
-			<string>YES</string>
 			<key>actionSelector</key>
 			<string>appendObject:toObject:</string>
 			<key>directFileTypes</key>
@@ -86,7 +84,11 @@
 				<string>rtf</string>
 				<string>rtfd</string>
 				<string>doc</string>
-				<string>&apos;TEXT&apos;</string>
+				<string>'TEXT'</string>
+				<string>md</string>
+				<string>markdown</string>
+				<string>mdown</string>
+				<string>mkdn</string>
 			</array>
 			<key>directTypes</key>
 			<array>
@@ -95,10 +97,12 @@
 			</array>
 			<key>name</key>
 			<string>Append Text...</string>
-			<key>reverseArguments</key>
-			<true/>
 			<key>precedence</key>
 			<string>0.02</string>
+			<key>reverseArguments</key>
+			<true/>
+			<key>validatesObjects</key>
+			<string>YES</string>
 		</dict>
 		<key>QSTextPrependAction</key>
 		<dict>
@@ -122,8 +126,6 @@
 		<dict>
 			<key>actionClass</key>
 			<string>QSTextManipulationPlugIn</string>
-			<key>validatesObjects</key>
-			<string>YES</string>
 			<key>actionSelector</key>
 			<string>prependObject:toObject:</string>
 			<key>directFileTypes</key>
@@ -132,7 +134,11 @@
 				<string>rtf</string>
 				<string>doc</string>
 				<string>rtfd</string>
-				<string>&apos;TEXT&apos;</string>
+				<string>'TEXT'</string>
+				<string>md</string>
+				<string>markdown</string>
+				<string>mdown</string>
+				<string>mkdn</string>
 			</array>
 			<key>directTypes</key>
 			<array>
@@ -147,6 +153,8 @@
 			<string>0.02</string>
 			<key>reverseArguments</key>
 			<true/>
+			<key>validatesObjects</key>
+			<string>YES</string>
 		</dict>
 	</dict>
 	<key>QSPlugIn</key>
@@ -159,8 +167,6 @@
 		</array>
 		<key>description</key>
 		<string>Actions for manipulating text lines in files</string>
-		<key>icon</key>
-		<string>ClippingText</string>
 		<key>extendedDescription</key>
 		<string>&lt;h3&gt;Overview&lt;/h3&gt;
 &lt;p&gt;This plugin gives Quicksilver the ability to edit text files by appending text lines to the end of a file, prepending text or changing or deleting lines within a file. The plugin allows manipulation of .txt, .rtf, .rtfd, .doc and .TEXT files.&lt;br /&gt;
@@ -175,17 +181,19 @@ Note that Quicksilver has the ability to enter into text files (using → or /) 
 &lt;li&gt;[Some Text] ⇥ Append To... ⇥ [Some File]&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;You should note that both these actions can use Quicksilver&apos;s &apos;smart&apos; ability to place any item, object or file inside a text file. If you append an image to a text file, the path of the image is added, or similarly for web addresses (URLs). When entering a text file (→ or /), these lines are automatically resolved by Quicksilver into the original file, URL etc.&lt;br /&gt;
+&lt;p&gt;You should note that both these actions can use Quicksilver's 'smart' ability to place any item, object or file inside a text file. If you append an image to a text file, the path of the image is added, or similarly for web addresses (URLs). When entering a text file (→ or /), these lines are automatically resolved by Quicksilver into the original file, URL etc.&lt;br /&gt;
 This gives you a convenient way to store any file or piece of information within a text file, using nothing but Quicksilver.&lt;/p&gt;
 
 &lt;h4&gt;Prepend Text... and Prepend To...&lt;/h4&gt;
-&lt;p&gt;This action works in a similar manner to the &apos;Append&apos; actions, but puts a line of text at the start of the file. The action is also reversible.&lt;/p&gt;
+&lt;p&gt;This action works in a similar manner to the 'Append' actions, but puts a line of text at the start of the file. The action is also reversible.&lt;/p&gt;
 
 &lt;h4&gt;Change To...&lt;/h4&gt;
 &lt;p&gt;The Change to... action is available for lines within a text file. To view lines, press → or / to enter into a text file. It allows for the modification of a specific line within a file.&lt;/p&gt;
 
 &lt;h4&gt;Delete Line&lt;/h4&gt;
 &lt;p&gt;As with the Change To... action, the Delete Line action is available for lines within a text file. It can be used to remove certain lines from within a given file.&lt;/p&gt;</string>
+		<key>icon</key>
+		<string>ClippingText</string>
 		<key>relatedBundles </key>
 		<array>
 			<string>com.apple.TextEdit</string>
