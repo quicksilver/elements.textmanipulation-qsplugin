@@ -19,6 +19,7 @@
 		4D0C0DC60E0FCED80027D189 /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		8D1AC9730486D14A00FE50C9 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D1AC9740486D14A00FE50C9 /* Text Manipulation.qsplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Text Manipulation.qsplugin"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD123A3715F6653500A52F0F /* Quicksilver.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Quicksilver.pch; sourceTree = "<group>"; };
 		DD92D38A0106425D02CA0E72 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		E1EAB045068128A200774DFF /* QSTextManipulationPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = QSTextManipulationPlugIn.m; sourceTree = "<group>"; };
 		E1EAB047068128A800774DFF /* QSTextManipulationPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = QSTextManipulationPlugIn.h; sourceTree = "<group>"; };
@@ -89,6 +90,7 @@
 				14A8CFE310CE4C3D003857E3 /* QSPlugIn.xcconfig */,
 				4D0C0DC20E0FCED80027D189 /* Debug.xcconfig */,
 				4D0C0DC60E0FCED80027D189 /* Release.xcconfig */,
+				CD123A3715F6653500A52F0F /* Quicksilver.pch */,
 			);
 			name = Configuration;
 			path = /private/tmp/QS/Configuration;
