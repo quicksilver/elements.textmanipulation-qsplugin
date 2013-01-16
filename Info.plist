@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.1.0</string>
+	<string>1.1.1</string>
 	<key>CFBundleVersion</key>
 	<string>7F</string>
 	<key>QSActions</key>
@@ -81,14 +81,16 @@
 			<key>directFileTypes</key>
 			<array>
 				<string>txt</string>
+				<string>csv</string>
 				<string>rtf</string>
 				<string>rtfd</string>
 				<string>doc</string>
-				<string>'TEXT'</string>
+				<string>&apos;TEXT&apos;</string>
 				<string>md</string>
 				<string>markdown</string>
 				<string>mdown</string>
 				<string>mkdn</string>
+				<string>public.text</string>
 			</array>
 			<key>directTypes</key>
 			<array>
@@ -134,7 +136,7 @@
 				<string>rtf</string>
 				<string>doc</string>
 				<string>rtfd</string>
-				<string>'TEXT'</string>
+				<string>&apos;TEXT&apos;</string>
 				<string>md</string>
 				<string>markdown</string>
 				<string>mdown</string>
@@ -181,11 +183,11 @@ Note that Quicksilver has the ability to enter into text files (using → or /) 
 &lt;li&gt;[Some Text] ⇥ Append To... ⇥ [Some File]&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;You should note that both these actions can use Quicksilver's 'smart' ability to place any item, object or file inside a text file. If you append an image to a text file, the path of the image is added, or similarly for web addresses (URLs). When entering a text file (→ or /), these lines are automatically resolved by Quicksilver into the original file, URL etc.&lt;br /&gt;
+&lt;p&gt;You should note that both these actions can use Quicksilver&apos;s &apos;smart&apos; ability to place any item, object or file inside a text file. If you append an image to a text file, the path of the image is added, or similarly for web addresses (URLs). When entering a text file (→ or /), these lines are automatically resolved by Quicksilver into the original file, URL etc.&lt;br /&gt;
 This gives you a convenient way to store any file or piece of information within a text file, using nothing but Quicksilver.&lt;/p&gt;
 
 &lt;h4&gt;Prepend Text... and Prepend To...&lt;/h4&gt;
-&lt;p&gt;This action works in a similar manner to the 'Append' actions, but puts a line of text at the start of the file. The action is also reversible.&lt;/p&gt;
+&lt;p&gt;This action works in a similar manner to the &apos;Append&apos; actions, but puts a line of text at the start of the file. The action is also reversible.&lt;/p&gt;
 
 &lt;h4&gt;Change To...&lt;/h4&gt;
 &lt;p&gt;The Change to... action is available for lines within a text file. To view lines, press → or / to enter into a text file. It allows for the modification of a specific line within a file.&lt;/p&gt;
@@ -218,6 +220,11 @@ This gives you a convenient way to store any file or piece of information within
 				<string>Text Lines</string>
 			</dict>
 		</dict>
+	</dict>
+	<key>QSRequirements</key>
+	<dict>
+		<key>version</key>
+		<string>3942</string>
 	</dict>
 </dict>
 </plist>
