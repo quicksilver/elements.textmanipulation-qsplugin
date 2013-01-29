@@ -92,7 +92,7 @@
             NSString *type = [[NSFileManager defaultManager] typeOfFile:path];
             
             // rich text
-        if (UTTypeConformsTo((CFStringRef)[[NSFileManager defaultManager] UTIOfFile:path], (CFStringRef)@"public.rtf"),[richTextTypes containsObject:type]) {
+        if (UTTypeConformsTo((CFStringRef)[iObject fileUTI], (CFStringRef)@"public.rtf"),[richTextTypes containsObject:type]) {
                 NSDictionary *docAttributes = nil;
                 NSError *error = nil;
                 NSMutableAttributedString *astring = [[NSMutableAttributedString alloc] initWithURL:[NSURL fileURLWithPath:path]
@@ -121,7 +121,7 @@
                 if (!error)
                     [wrapper writeToFile:path atomically:NO updateFilenames:YES];
                 
-        } else if (UTTypeConformsTo((CFStringRef)[[NSFileManager defaultManager] UTIOfFile:path], (CFStringRef)@"public.text") || [textTypes containsObject:type]) {
+        } else if (UTTypeConformsTo((CFStringRef)[iObject fileUTI], (CFStringRef)@"public.text") || [textTypes containsObject:type]) {
                 NSStringEncoding encoding;
                 NSString *text = [NSString stringWithContentsOfFile:path usedEncoding:&encoding error:nil];
                 if (atBeginning || ![text length]) {
