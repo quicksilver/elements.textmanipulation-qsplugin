@@ -92,7 +92,7 @@
             NSString *type = [[NSFileManager defaultManager] typeOfFile:path];
             
             // rich text
-            if ([richTextTypes containsObject:type]) {
+        if (UTTypeConformsTo((CFStringRef)[iObject fileUTI], (CFStringRef)@"public.rtf") || [richTextTypes containsObject:type]) {
                 NSDictionary *docAttributes = nil;
                 NSError *error = nil;
                 NSMutableAttributedString *astring = [[NSMutableAttributedString alloc] initWithURL:[NSURL fileURLWithPath:path]
@@ -121,7 +121,7 @@
                 if (!error)
                     [wrapper writeToFile:path atomically:NO updateFilenames:YES];
                 
-            } else if ([textTypes containsObject:type]) {
+        } else if (UTTypeConformsTo((CFStringRef)[iObject fileUTI], (CFStringRef)@"public.text") || [textTypes containsObject:type]) {
                 NSStringEncoding encoding;
                 NSString *text = [NSString stringWithContentsOfFile:path usedEncoding:&encoding error:nil];
                 if (atBeginning || ![text length]) {
@@ -133,7 +133,7 @@
                 }
                 [text writeToFile:path atomically:NO encoding:encoding error:nil];
             } else {
-                NSBeep();  
+                QSShowAppNotifWithAttributes(@"QSTextManipulation", NSLocalizedStringFromTableInBundle(@"Error Appending Text", nil, [NSBundle bundleForClass:[self class]], @"Title for the error notif when appending text fails"), [NSString stringWithFormat:NSLocalizedStringFromTableInBundle(@"Cannot append text to %@ files", nil, [NSBundle bundleForClass:[self class]], @"MEssage of the error notif when appending text fails"),type]);
             }
         }
     }
