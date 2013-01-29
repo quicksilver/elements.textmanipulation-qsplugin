@@ -92,7 +92,7 @@
             NSString *type = [[NSFileManager defaultManager] typeOfFile:path];
             
             // rich text
-        if (UTTypeConformsTo((CFStringRef)[iObject fileUTI], (CFStringRef)@"public.rtf"),[richTextTypes containsObject:type]) {
+        if (UTTypeConformsTo((CFStringRef)[iObject fileUTI], (CFStringRef)@"public.rtf") || [richTextTypes containsObject:type]) {
                 NSDictionary *docAttributes = nil;
                 NSError *error = nil;
                 NSMutableAttributedString *astring = [[NSMutableAttributedString alloc] initWithURL:[NSURL fileURLWithPath:path]
