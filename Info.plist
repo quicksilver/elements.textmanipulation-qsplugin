@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleDisplayName</key>
-	<string>Text Manipulation Actions</string>
+	<string>Text Manipulation Plugin</string>
 	<key>CFBundleExecutable</key>
 	<string>Text Manipulation</string>
 	<key>CFBundleIdentifier</key>
@@ -13,13 +13,13 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>Text Manipulation Actions</string>
+	<string>Text Manipulation Plugin</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.1.0</string>
+	<string>1.1.1</string>
 	<key>CFBundleVersion</key>
-	<string>7F</string>
+	<string>80</string>
 	<key>QSActions</key>
 	<dict>
 		<key>QSLineRefDeleteAction</key>
@@ -67,6 +67,10 @@
 				<string>NSStringPboardType</string>
 				<string>NSFilenamesPboardType</string>
 			</array>
+			<key>indirectTypes</key>
+			<array>
+				<string>public.text</string>
+			</array>
 			<key>name</key>
 			<string>Append To...</string>
 			<key>precedence</key>
@@ -81,6 +85,7 @@
 			<key>directFileTypes</key>
 			<array>
 				<string>txt</string>
+				<string>csv</string>
 				<string>rtf</string>
 				<string>rtfd</string>
 				<string>doc</string>
@@ -89,6 +94,7 @@
 				<string>markdown</string>
 				<string>mdown</string>
 				<string>mkdn</string>
+				<string>public.text</string>
 			</array>
 			<key>directTypes</key>
 			<array>
@@ -117,6 +123,10 @@
 			</array>
 			<key>enabled</key>
 			<false/>
+			<key>indirectTypes</key>
+			<array>
+				<string>public.text</string>
+			</array>
 			<key>name</key>
 			<string>Prepend To...</string>
 			<key>precedence</key>
@@ -218,6 +228,11 @@ This gives you a convenient way to store any file or piece of information within
 				<string>Text Lines</string>
 			</dict>
 		</dict>
+	</dict>
+	<key>QSRequirements</key>
+	<dict>
+		<key>version</key>
+		<string>3940</string>
 	</dict>
 </dict>
 </plist>
