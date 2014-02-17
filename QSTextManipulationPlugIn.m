@@ -113,7 +113,7 @@
             NSStringEncoding encoding;
 
             NSString *string = [NSString stringWithContentsOfFile:file usedEncoding:&encoding error:nil];
-            NSMutableArray *lines = [[[string lines] mutableCopy] autorelease]; 		
+            NSMutableArray *lines = [[string lines] mutableCopy];
             NSUInteger lineIndex = [[reference objectForKey:@"line"] unsignedIntegerValue];
             if (atBeginning) {
                 lineIndex--;
@@ -126,7 +126,7 @@
             NSString *type = [[NSFileManager defaultManager] typeOfFile:path];
             
             // rich text
-        if (UTTypeConformsTo((CFStringRef)[iObject fileUTI], (CFStringRef)@"public.rtf") || [richTextTypes containsObject:type]) {
+        if (UTTypeConformsTo((__bridge CFStringRef)[iObject fileUTI], (__bridge CFStringRef)@"public.rtf") || [richTextTypes containsObject:type]) {
                 NSDictionary *docAttributes = nil;
                 NSError *error = nil;
                 NSMutableAttributedString *astring = [[NSMutableAttributedString alloc] initWithURL:[NSURL fileURLWithPath:path]
@@ -135,8 +135,8 @@
                                                                                               error:&error];
                 NSDictionary *attributes = [astring attributesAtIndex:atBeginning ? 0 : [astring length]-1
                                                        effectiveRange:nil];
-                NSAttributedString *newlineString = [[[NSAttributedString alloc] initWithString:@"\n" attributes:attributes] autorelease];
-                NSAttributedString *appendString = [[[NSAttributedString alloc] initWithString:newLine  attributes:attributes] autorelease];
+                NSAttributedString *newlineString = [[NSAttributedString alloc] initWithString:@"\n" attributes:attributes];
+                NSAttributedString *appendString = [[NSAttributedString alloc] initWithString:newLine  attributes:attributes];
                 
                 if (atBeginning) {
                     [astring insertAttributedString:newlineString atIndex:0];
@@ -155,7 +155,7 @@
                 if (!error)
                     [wrapper writeToFile:path atomically:NO updateFilenames:YES];
                 
-        } else if (UTTypeConformsTo((CFStringRef)[iObject fileUTI], (CFStringRef)@"public.text") || [textTypes containsObject:type]) {
+        } else if (UTTypeConformsTo((__bridge CFStringRef)[iObject fileUTI], (__bridge CFStringRef)@"public.text") || [textTypes containsObject:type]) {
                 NSStringEncoding encoding;
                 NSString *text = [NSString stringWithContentsOfFile:path usedEncoding:&encoding error:nil];
                 if (atBeginning || ![text length]) {
@@ -191,7 +191,7 @@
     
     string = [string stringByReplacing:@"\n" with:@"\r"];
     
-    NSMutableArray *lines = [[[string componentsSeparatedByString:@"\r"] mutableCopy] autorelease];
+    NSMutableArray *lines = [[string componentsSeparatedByString:@"\r"] mutableCopy];
     
     NSString *fileLine = [lines objectAtIndex:lineNum];
     
@@ -214,7 +214,7 @@
     
     NSStringEncoding encoding;
     NSString *string = [NSString stringWithContentsOfFile:file usedEncoding:&encoding error:nil];
-    NSMutableArray *lines = [[[string lines] mutableCopy] autorelease];
+    NSMutableArray *lines = [[string lines] mutableCopy];
     
     
     NSString *fileLine = [lines objectAtIndex:lineNum];

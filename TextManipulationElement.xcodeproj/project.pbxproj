@@ -199,6 +199,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4D0C0DC20E0FCED80027D189 /* Debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 			};
 			name = Debug;
 		};
@@ -206,6 +207,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4D0C0DC60E0FCED80027D189 /* Release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 			};
 			name = Release;
 		};
