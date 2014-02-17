@@ -9,8 +9,12 @@
 #import "QSTextManipulationPlugIn.h"
 
 @interface QSTextManipulationPlugIn : NSObject
+
+@property (retain) NSDateFormatter *dateFormatter;
+@property (retain) NSArray *reverseActions;
+
 - (QSObject *) prependObject:(QSObject *)dObject toObject:(QSObject *)iObject;
 - (QSObject *) appendObject:(QSObject *)dObject toObject:(QSObject *)iObject;
-- (QSObject *) appendObject:(QSObject *)dObject toObject:(QSObject *)iObject atBeginning:(BOOL)atBeginning;
+- (QSObject *) appendObject:(QSObject *)dObject toObject:(QSObject *)iObject withTimestamp:(BOOL)includeTime atBeginning:(BOOL)atBeginning;
 @end
 

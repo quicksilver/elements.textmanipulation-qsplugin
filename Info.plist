@@ -76,6 +76,24 @@
 			<key>precedence</key>
 			<string>0.01</string>
 		</dict>
+		<key>QSTextAppendTimedAction</key>
+		<dict>
+			<key>actionClass</key>
+			<string>QSTextManipulationPlugIn</string>
+			<key>actionSelector</key>
+			<string>appendTimestampedObject:toObject:</string>
+			<key>directTypes</key>
+			<array>
+				<string>NSStringPboardType</string>
+				<string>NSFilenamesPboardType</string>
+			</array>
+			<key>indirectTypes</key>
+			<array>
+				<string>public.text</string>
+			</array>
+			<key>name</key>
+			<string>Append with Timestamp To…</string>
+		</dict>
 		<key>QSTextAppendReverseAction</key>
 		<dict>
 			<key>actionClass</key>
@@ -110,6 +128,38 @@
 			<key>validatesObjects</key>
 			<string>YES</string>
 		</dict>
+		<key>QSTextAppendTimedReverseAction</key>
+		<dict>
+			<key>actionClass</key>
+			<string>QSTextManipulationPlugIn</string>
+			<key>actionSelector</key>
+			<string>appendTimestampedObject:toObject:</string>
+			<key>directFileTypes</key>
+			<array>
+				<string>txt</string>
+				<string>csv</string>
+				<string>rtf</string>
+				<string>rtfd</string>
+				<string>doc</string>
+				<string>&apos;TEXT&apos;</string>
+				<string>md</string>
+				<string>markdown</string>
+				<string>mdown</string>
+				<string>mkdn</string>
+				<string>public.text</string>
+			</array>
+			<key>directTypes</key>
+			<array>
+				<string>NSFilenamesPboardType</string>
+				<string>QSLineReferenceType</string>
+			</array>
+			<key>name</key>
+			<string>Append Text with Timestamp…</string>
+			<key>reverseArguments</key>
+			<true/>
+			<key>validatesObjects</key>
+			<string>YES</string>
+		</dict>
 		<key>QSTextPrependAction</key>
 		<dict>
 			<key>actionClass</key>
@@ -131,6 +181,26 @@
 			<string>Prepend To...</string>
 			<key>precedence</key>
 			<string>0.01</string>
+		</dict>
+		<key>QSTextPrependTimedAction</key>
+		<dict>
+			<key>actionClass</key>
+			<string>QSTextManipulationPlugIn</string>
+			<key>actionSelector</key>
+			<string>prependTimestampedObject:toObject:</string>
+			<key>directTypes</key>
+			<array>
+				<string>NSStringPboardType</string>
+				<string>NSFilenamesPboardType</string>
+			</array>
+			<key>enabled</key>
+			<false/>
+			<key>indirectTypes</key>
+			<array>
+				<string>public.text</string>
+			</array>
+			<key>name</key>
+			<string>Prepend with Timestamp To…</string>
 		</dict>
 		<key>QSTextPrependReverseAction</key>
 		<dict>
@@ -161,6 +231,38 @@
 			<string>Prepend Text...</string>
 			<key>precedence</key>
 			<string>0.02</string>
+			<key>reverseArguments</key>
+			<true/>
+			<key>validatesObjects</key>
+			<string>YES</string>
+		</dict>
+		<key>QSTextPrependTimedReverseAction</key>
+		<dict>
+			<key>actionClass</key>
+			<string>QSTextManipulationPlugIn</string>
+			<key>actionSelector</key>
+			<string>prependTimestampedObject:toObject:</string>
+			<key>directFileTypes</key>
+			<array>
+				<string>txt</string>
+				<string>rtf</string>
+				<string>doc</string>
+				<string>rtfd</string>
+				<string>&apos;TEXT&apos;</string>
+				<string>md</string>
+				<string>markdown</string>
+				<string>mdown</string>
+				<string>mkdn</string>
+			</array>
+			<key>directTypes</key>
+			<array>
+				<string>NSFilenamesPboardType</string>
+				<string>QSLineReferenceType</string>
+			</array>
+			<key>enabled</key>
+			<false/>
+			<key>name</key>
+			<string>Prepend Text with Timestamp…</string>
 			<key>reverseArguments</key>
 			<true/>
 			<key>validatesObjects</key>
