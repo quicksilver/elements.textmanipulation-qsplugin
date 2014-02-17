@@ -52,7 +52,7 @@
 			<key>enabled</key>
 			<false/>
 			<key>name</key>
-			<string>Change To...</string>
+			<string>Change To…</string>
 			<key>validatesObjects</key>
 			<string>YES</string>
 		</dict>
@@ -72,7 +72,7 @@
 				<string>public.text</string>
 			</array>
 			<key>name</key>
-			<string>Append To...</string>
+			<string>Append To…</string>
 			<key>precedence</key>
 			<string>0.01</string>
 		</dict>
@@ -102,7 +102,7 @@
 				<string>QSLineReferenceType</string>
 			</array>
 			<key>name</key>
-			<string>Append Text...</string>
+			<string>Append Text…</string>
 			<key>precedence</key>
 			<string>0.02</string>
 			<key>reverseArguments</key>
@@ -178,7 +178,7 @@
 				<string>public.text</string>
 			</array>
 			<key>name</key>
-			<string>Prepend To...</string>
+			<string>Prepend To…</string>
 			<key>precedence</key>
 			<string>0.01</string>
 		</dict>
@@ -208,7 +208,7 @@
 			<key>enabled</key>
 			<false/>
 			<key>name</key>
-			<string>Prepend Text...</string>
+			<string>Prepend Text…</string>
 			<key>precedence</key>
 			<string>0.02</string>
 			<key>reverseArguments</key>
