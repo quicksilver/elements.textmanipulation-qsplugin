@@ -64,6 +64,8 @@
 			<string>appendObject:toObject:</string>
 			<key>alternateAction</key>
 			<string>QSTextAppendTimedAction</string>
+			<key>commandFormat</key>
+			<string>Append “%@” to %@</string>
 			<key>directTypes</key>
 			<array>
 				<string>NSStringPboardType</string>
@@ -86,6 +88,8 @@
 			<string>appendObject:toObject:</string>
 			<key>alternateAction</key>
 			<string>QSTextAppendTimedReverseAction</string>
+			<key>commandFormat</key>
+			<string>Append line to %@ containing “%@”</string>
 			<key>directFileTypes</key>
 			<array>
 				<string>txt</string>
@@ -120,6 +124,8 @@
 			<string>QSTextManipulationPlugIn</string>
 			<key>actionSelector</key>
 			<string>appendTimestampedObject:toObject:</string>
+			<key>commandFormat</key>
+			<string>Append “%@” with timestamp to %@</string>
 			<key>directTypes</key>
 			<array>
 				<string>NSStringPboardType</string>
@@ -138,6 +144,8 @@
 			<string>QSTextManipulationPlugIn</string>
 			<key>actionSelector</key>
 			<string>appendTimestampedObject:toObject:</string>
+			<key>commandFormat</key>
+			<string>Append timestamped line to %@ containing “%@”</string>
 			<key>directFileTypes</key>
 			<array>
 				<string>txt</string>
@@ -172,6 +180,8 @@
 			<string>prependObject:toObject:</string>
 			<key>alternateAction</key>
 			<string>QSTextPrependTimedAction</string>
+			<key>commandFormat</key>
+			<string>Prepend “%@” to %@</string>
 			<key>directTypes</key>
 			<array>
 				<string>NSStringPboardType</string>
@@ -196,6 +206,8 @@
 			<string>prependObject:toObject:</string>
 			<key>alternateAction</key>
 			<string>QSTextPrependTimedReverseAction</string>
+			<key>commandFormat</key>
+			<string>Prepend line to %@ containing “%@”</string>
 			<key>directFileTypes</key>
 			<array>
 				<string>txt</string>
@@ -230,6 +242,8 @@
 			<string>QSTextManipulationPlugIn</string>
 			<key>actionSelector</key>
 			<string>prependTimestampedObject:toObject:</string>
+			<key>commandFormat</key>
+			<string>Prepend “%@” with timestamp to %@</string>
 			<key>directTypes</key>
 			<array>
 				<string>NSStringPboardType</string>
@@ -250,6 +264,8 @@
 			<string>QSTextManipulationPlugIn</string>
 			<key>actionSelector</key>
 			<string>prependTimestampedObject:toObject:</string>
+			<key>commandFormat</key>
+			<string>Prepend timestamped line to %@ containing “%@”</string>
 			<key>directFileTypes</key>
 			<array>
 				<string>txt</string>
