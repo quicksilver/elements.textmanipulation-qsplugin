@@ -17,8 +17,8 @@
 #define kQSTextPrependTimedAction @"QSTextPrependTimedAction"
 #define kQSTextAppendTimedReverseAction @"QSTextAppendTimedReverseAction"
 #define kQSTextPrependTimedReverseAction @"QSTextPrependTimedReverseAction"
-#define textTypes [NSArray arrayWithObjects:@"'TEXT'", @"txt", @"sh", @"pl", @"rb", @"html", @"htm",@"md",@"markdown", @"mdown", @"mkdn", nil]
-#define richTextTypes [NSArray arrayWithObjects:@"rtf", @"doc", @"rtfd", nil]
+#define textTypes @[@"'TEXT'", @"txt", @"sh", @"pl", @"rb", @"html", @"htm",@"md",@"markdown", @"mdown", @"mkdn"]
+#define richTextTypes @[@"rtf", @"doc", @"rtfd"]
 
 @implementation QSTextManipulationPlugIn
 
