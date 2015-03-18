@@ -17,9 +17,9 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.1.1</string>
+	<string>1.2.0</string>
 	<key>CFBundleVersion</key>
-	<string>80</string>
+	<string>81</string>
 	<key>QSActions</key>
 	<dict>
 		<key>QSLineRefDeleteAction</key>
@@ -52,7 +52,7 @@
 			<key>enabled</key>
 			<false/>
 			<key>name</key>
-			<string>Change To...</string>
+			<string>Change To…</string>
 			<key>validatesObjects</key>
 			<string>YES</string>
 		</dict>
@@ -62,6 +62,10 @@
 			<string>QSTextManipulationPlugIn</string>
 			<key>actionSelector</key>
 			<string>appendObject:toObject:</string>
+			<key>alternateAction</key>
+			<string>QSTextAppendTimedAction</string>
+			<key>commandFormat</key>
+			<string>Append “%@” to %@</string>
 			<key>directTypes</key>
 			<array>
 				<string>NSStringPboardType</string>
@@ -72,7 +76,7 @@
 				<string>public.text</string>
 			</array>
 			<key>name</key>
-			<string>Append To...</string>
+			<string>Append To…</string>
 			<key>precedence</key>
 			<string>0.01</string>
 		</dict>
@@ -82,6 +86,10 @@
 			<string>QSTextManipulationPlugIn</string>
 			<key>actionSelector</key>
 			<string>appendObject:toObject:</string>
+			<key>alternateAction</key>
+			<string>QSTextAppendTimedReverseAction</string>
+			<key>commandFormat</key>
+			<string>Append line to %@ containing “%@”</string>
 			<key>directFileTypes</key>
 			<array>
 				<string>txt</string>
@@ -102,9 +110,63 @@
 				<string>QSLineReferenceType</string>
 			</array>
 			<key>name</key>
-			<string>Append Text...</string>
+			<string>Append Text…</string>
 			<key>precedence</key>
 			<string>0.02</string>
+			<key>reverseArguments</key>
+			<true/>
+			<key>validatesObjects</key>
+			<string>YES</string>
+		</dict>
+		<key>QSTextAppendTimedAction</key>
+		<dict>
+			<key>actionClass</key>
+			<string>QSTextManipulationPlugIn</string>
+			<key>actionSelector</key>
+			<string>appendTimestampedObject:toObject:</string>
+			<key>commandFormat</key>
+			<string>Append “%@” with timestamp to %@</string>
+			<key>directTypes</key>
+			<array>
+				<string>NSStringPboardType</string>
+				<string>NSFilenamesPboardType</string>
+			</array>
+			<key>indirectTypes</key>
+			<array>
+				<string>public.text</string>
+			</array>
+			<key>name</key>
+			<string>Append with Timestamp To…</string>
+		</dict>
+		<key>QSTextAppendTimedReverseAction</key>
+		<dict>
+			<key>actionClass</key>
+			<string>QSTextManipulationPlugIn</string>
+			<key>actionSelector</key>
+			<string>appendTimestampedObject:toObject:</string>
+			<key>commandFormat</key>
+			<string>Append timestamped line to %@ containing “%@”</string>
+			<key>directFileTypes</key>
+			<array>
+				<string>txt</string>
+				<string>csv</string>
+				<string>rtf</string>
+				<string>rtfd</string>
+				<string>doc</string>
+				<string>'TEXT'</string>
+				<string>md</string>
+				<string>markdown</string>
+				<string>mdown</string>
+				<string>mkdn</string>
+				<string>public.text</string>
+			</array>
+			<key>directTypes</key>
+			<array>
+				<string>NSFilenamesPboardType</string>
+				<string>QSLineReferenceType</string>
+			</array>
+			<key>name</key>
+			<string>Append Text with Timestamp…</string>
 			<key>reverseArguments</key>
 			<true/>
 			<key>validatesObjects</key>
@@ -116,6 +178,10 @@
 			<string>QSTextManipulationPlugIn</string>
 			<key>actionSelector</key>
 			<string>prependObject:toObject:</string>
+			<key>alternateAction</key>
+			<string>QSTextPrependTimedAction</string>
+			<key>commandFormat</key>
+			<string>Prepend “%@” to %@</string>
 			<key>directTypes</key>
 			<array>
 				<string>NSStringPboardType</string>
@@ -128,7 +194,7 @@
 				<string>public.text</string>
 			</array>
 			<key>name</key>
-			<string>Prepend To...</string>
+			<string>Prepend To…</string>
 			<key>precedence</key>
 			<string>0.01</string>
 		</dict>
@@ -138,6 +204,10 @@
 			<string>QSTextManipulationPlugIn</string>
 			<key>actionSelector</key>
 			<string>prependObject:toObject:</string>
+			<key>alternateAction</key>
+			<string>QSTextPrependTimedReverseAction</string>
+			<key>commandFormat</key>
+			<string>Prepend line to %@ containing “%@”</string>
 			<key>directFileTypes</key>
 			<array>
 				<string>txt</string>
@@ -158,9 +228,65 @@
 			<key>enabled</key>
 			<false/>
 			<key>name</key>
-			<string>Prepend Text...</string>
+			<string>Prepend Text…</string>
 			<key>precedence</key>
 			<string>0.02</string>
+			<key>reverseArguments</key>
+			<true/>
+			<key>validatesObjects</key>
+			<string>YES</string>
+		</dict>
+		<key>QSTextPrependTimedAction</key>
+		<dict>
+			<key>actionClass</key>
+			<string>QSTextManipulationPlugIn</string>
+			<key>actionSelector</key>
+			<string>prependTimestampedObject:toObject:</string>
+			<key>commandFormat</key>
+			<string>Prepend “%@” with timestamp to %@</string>
+			<key>directTypes</key>
+			<array>
+				<string>NSStringPboardType</string>
+				<string>NSFilenamesPboardType</string>
+			</array>
+			<key>enabled</key>
+			<false/>
+			<key>indirectTypes</key>
+			<array>
+				<string>public.text</string>
+			</array>
+			<key>name</key>
+			<string>Prepend with Timestamp To…</string>
+		</dict>
+		<key>QSTextPrependTimedReverseAction</key>
+		<dict>
+			<key>actionClass</key>
+			<string>QSTextManipulationPlugIn</string>
+			<key>actionSelector</key>
+			<string>prependTimestampedObject:toObject:</string>
+			<key>commandFormat</key>
+			<string>Prepend timestamped line to %@ containing “%@”</string>
+			<key>directFileTypes</key>
+			<array>
+				<string>txt</string>
+				<string>rtf</string>
+				<string>doc</string>
+				<string>rtfd</string>
+				<string>'TEXT'</string>
+				<string>md</string>
+				<string>markdown</string>
+				<string>mdown</string>
+				<string>mkdn</string>
+			</array>
+			<key>directTypes</key>
+			<array>
+				<string>NSFilenamesPboardType</string>
+				<string>QSLineReferenceType</string>
+			</array>
+			<key>enabled</key>
+			<false/>
+			<key>name</key>
+			<string>Prepend Text with Timestamp…</string>
 			<key>reverseArguments</key>
 			<true/>
 			<key>validatesObjects</key>
@@ -178,30 +304,38 @@
 		<key>description</key>
 		<string>Actions for manipulating text lines in files</string>
 		<key>extendedDescription</key>
-		<string>&lt;h3&gt;Overview&lt;/h3&gt;
-&lt;p&gt;This plugin gives Quicksilver the ability to edit text files by appending text lines to the end of a file, prepending text or changing or deleting lines within a file. The plugin allows manipulation of .txt, .rtf, .rtfd, .doc and .TEXT files.&lt;br /&gt;
-Note that Quicksilver has the ability to enter into text files (using → or /) and list the contents of the file, which can be used in conjunction with this plugin for increased flexibility.&lt;/p&gt;
-
+		<string>&lt;h2&gt;Overview&lt;/h2&gt;
+&lt;p&gt;This plugin gives Quicksilver the ability to edit text files by appending text lines to the end of a file, prepending text or changing or deleting lines within a file. The plugin allows manipulation of &lt;code&gt;.txt&lt;/code&gt;, &lt;code&gt;.rtf&lt;/code&gt;, &lt;code&gt;.rtfd&lt;/code&gt;, &lt;code&gt;.doc&lt;/code&gt; and &lt;code&gt;.TEXT&lt;/code&gt; files.&lt;/p&gt;
+&lt;p&gt;Note that Quicksilver has the ability to enter into text files (using → or /) and list the contents of the file, which can be used in conjunction with this plugin for increased flexibility.&lt;/p&gt;
 &lt;h3&gt;Actions&lt;/h3&gt;
-
-&lt;h4&gt;Append Text... and Append To...&lt;/h4&gt;
-&lt;p&gt;Append some text to the selected text file. You can append text to a text file, or to a line within a text file (if you have entered a text file with → or /). This action is reversible. You can:&lt;/p&gt;
+&lt;dl&gt;
+&lt;dt&gt;Append Text… and Append To…&lt;/dt&gt;
+&lt;dd&gt;
+&lt;p&gt;Append some text to the selected text file. You can append text to a text
+file, or to a line within a text file (if you have entered a text file with →
+or /). This action is reversible. You can:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;[Some File] ⇥ Append Text... ⇥ [Some Text]&lt;/li&gt;
-&lt;li&gt;[Some Text] ⇥ Append To... ⇥ [Some File]&lt;/li&gt;
+&lt;li&gt;[Some File] ⇥ Append Text… ⇥ [Some Text]&lt;/li&gt;
+&lt;li&gt;[Some Text] ⇥ Append To… ⇥ [Some File]&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;p&gt;You should note that both these actions can use Quicksilver's 'smart' ability to place any item, object or file inside a text file. If you append an image to a text file, the path of the image is added, or similarly for web addresses (URLs). When entering a text file (→ or /), these lines are automatically resolved by Quicksilver into the original file, URL etc.&lt;br /&gt;
-This gives you a convenient way to store any file or piece of information within a text file, using nothing but Quicksilver.&lt;/p&gt;
-
-&lt;h4&gt;Prepend Text... and Prepend To...&lt;/h4&gt;
+&lt;p&gt;You should note that these actions can use Quicksilver's “smart” ability to place any item, object or file inside a text file. If you append an image to a text file, the path of the image is added, or similarly for web addresses (URLs). When entering a text file (→ or /), these lines are automatically resolved by Quicksilver into the original file, URL etc.&lt;/p&gt;
+&lt;p&gt;This gives you a convenient way to store and retrieve any file or piece of information within a text file, using nothing but Quicksilver.&lt;/p&gt;
+&lt;/dd&gt;
+&lt;dt&gt;Prepend Text… and Prepend To…&lt;/dt&gt;
+&lt;dd&gt;
 &lt;p&gt;This action works in a similar manner to the 'Append' actions, but puts a line of text at the start of the file. The action is also reversible.&lt;/p&gt;
-
-&lt;h4&gt;Change To...&lt;/h4&gt;
-&lt;p&gt;The Change to... action is available for lines within a text file. To view lines, press → or / to enter into a text file. It allows for the modification of a specific line within a file.&lt;/p&gt;
-
-&lt;h4&gt;Delete Line&lt;/h4&gt;
-&lt;p&gt;As with the Change To... action, the Delete Line action is available for lines within a text file. It can be used to remove certain lines from within a given file.&lt;/p&gt;</string>
+&lt;/dd&gt;
+&lt;dt&gt;Change To…&lt;/dt&gt;
+&lt;dd&gt;
+&lt;p&gt;The Change to… action is available for lines within a text file. To view lines, press → or / to enter into a text file. It allows for the modification of a specific line within a file.&lt;/p&gt;
+&lt;/dd&gt;
+&lt;dt&gt;Delete Line&lt;/dt&gt;
+&lt;dd&gt;
+&lt;p&gt;As with the Change To… action, the Delete Line action is available for lines within a text file. It can be used to remove certain lines from within a given file.&lt;/p&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;h4&gt;Timestamps&lt;/h4&gt;
+&lt;p&gt;All of the Append/Prepend actions have alternates that will include a timestamp at the beginning of the line. The timestamp's format is taken from the “Short” format for Date and Time in System Preferences, so you can customize it there.&lt;/p&gt;</string>
 		<key>icon</key>
 		<string>ClippingText</string>
 		<key>relatedBundles </key>
@@ -232,7 +366,7 @@ This gives you a convenient way to store any file or piece of information within
 	<key>QSRequirements</key>
 	<dict>
 		<key>version</key>
-		<string>3940</string>
+		<string>4001</string>
 	</dict>
 </dict>
 </plist>

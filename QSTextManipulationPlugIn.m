@@ -13,18 +13,36 @@
 #define kQSLineRefDeleteAction @"QSLineRefDeleteAction"
 #define kQSTextAppendReverseAction @"QSTextAppendReverseAction"
 #define kQSTextPrependReverseAction @"QSTextPrependReverseAction"
-#define textTypes [NSArray arrayWithObjects:@"'TEXT'", @"txt", @"sh", @"pl", @"rb", @"html", @"htm",@"md",@"markdown", @"mdown", @"mkdn", nil]
-#define richTextTypes [NSArray arrayWithObjects:@"rtf", @"doc", @"rtfd", nil]
+#define kQSTextAppendTimedAction @"QSTextAppendTimedAction"
+#define kQSTextPrependTimedAction @"QSTextPrependTimedAction"
+#define kQSTextAppendTimedReverseAction @"QSTextAppendTimedReverseAction"
+#define kQSTextPrependTimedReverseAction @"QSTextPrependTimedReverseAction"
+#define textTypes @[@"'TEXT'", @"txt", @"sh", @"pl", @"rb", @"html", @"htm",@"md",@"markdown", @"mdown", @"mkdn"]
+#define richTextTypes @[@"rtf", @"doc", @"rtfd"]
 
 @implementation QSTextManipulationPlugIn
+
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        _dateFormatter = [[NSDateFormatter alloc] init];
+        [_dateFormatter setDateStyle:NSDateFormatterShortStyle];
+        [_dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+        _reverseActions = @[kQSTextAppendReverseAction, kQSTextPrependReverseAction, kQSTextAppendTimedReverseAction, kQSTextPrependTimedReverseAction];
+    }
+    return self;
+}
 
 - (NSArray *)validIndirectObjectsForAction:(NSString *)action directObject:(QSObject *)dObject {
     
     // for the Change To... select the current line to be changed
 	if ([action isEqualToString:kQSLineRefEditAction]) {
         return [NSArray arrayWithObject:[QSObject textProxyObjectWithDefaultValue:[dObject stringValue]]]; 
-    } else if ([action isEqualToString:kQSTextAppendReverseAction] || [action isEqualToString:kQSTextPrependReverseAction]) {
-        return [NSArray arrayWithObject:[QSObject textProxyObjectWithDefaultValue:@""]];
+    } else {
+        if ([self.reverseActions containsObject:action]) {
+            return @[[QSObject textProxyObjectWithDefaultValue:@""]];
+        }
     }
     return nil;
 }
@@ -33,7 +51,7 @@
     // most methods are only set to work for 1 direct object
     if ([dObject count] == 1) {
         
-        return [NSArray arrayWithObjects:kQSTextAppendReverseAction,kQSTextPrependReverseAction,kQSLineRefEditAction,kQSLineRefDeleteAction,nil];
+        return [self.reverseActions arrayByAddingObjectsFromArray:@[kQSLineRefEditAction, kQSLineRefDeleteAction]];
         
         // In the future, we may wish to make the Append Text... and Prepend Text... actions available for ALL files of type text
         
@@ -52,15 +70,26 @@
 }
 
 - (QSObject *)prependObject:(QSObject *)dObject toObject:(QSObject *)iObject {
-    return [self appendObject:(QSObject *)dObject toObject:(QSObject *)iObject atBeginning:YES];
+    return [self appendObject:(QSObject *)dObject toObject:(QSObject *)iObject withTimestamp:NO atBeginning:YES];
 }
 - (QSObject *)appendObject:(QSObject *)dObject toObject:(QSObject *)iObject {
-    return [self appendObject:(QSObject *)dObject toObject:(QSObject *)iObject atBeginning:NO];
+    return [self appendObject:(QSObject *)dObject toObject:(QSObject *)iObject withTimestamp:NO atBeginning:NO];
     
 }
-- (QSObject *)appendObject:(QSObject *)dObject toObject:(QSObject *)iObject atBeginning:(BOOL)atBeginning {
-    
+
+- (QSObject *)prependTimestampedObject:(QSObject *)dObject toObject:(QSObject *)iObject
+{
+    return [self appendObject:(QSObject *)dObject toObject:(QSObject *)iObject withTimestamp:YES atBeginning:YES];
+}
+
+- (QSObject *)appendTimestampedObject:(QSObject *)dObject toObject:(QSObject *)iObject {
+    return [self appendObject:(QSObject *)dObject toObject:(QSObject *)iObject withTimestamp:YES atBeginning:NO];
+}
+
+- (QSObject *)appendObject:(QSObject *)dObject toObject:(QSObject *)iObject withTimestamp:(BOOL)includeTime atBeginning:(BOOL)atBeginning
+{
 	NSString *newLine = nil;
+    NSString *timestamp = includeTime ? [self.dateFormatter stringFromDate:[NSDate date]] : nil;
     for (QSObject *anObject in [dObject splitObjects]) {
         // get the new line - file path for files or text (else string value - last case)
         if ([[anObject primaryType] isEqualToString:QSFilePathType]) {
@@ -71,6 +100,11 @@
             newLine = [anObject stringValue];
         }
         
+        // prepend a timestamp?
+        if (includeTime) {
+            newLine = [NSString stringWithFormat:@"%@ %@", timestamp, newLine];
+        }
+        
         // if we're within a file (QSLineReferenceType file)
         if ([iObject containsType:@"QSLineReferenceType"]) {
             
@@ -79,7 +113,7 @@
             NSStringEncoding encoding;
 
             NSString *string = [NSString stringWithContentsOfFile:file usedEncoding:&encoding error:nil];
-            NSMutableArray *lines = [[[string lines] mutableCopy] autorelease]; 		
+            NSMutableArray *lines = [[string lines] mutableCopy];
             NSUInteger lineIndex = [[reference objectForKey:@"line"] unsignedIntegerValue];
             if (atBeginning) {
                 lineIndex--;
@@ -92,7 +126,7 @@
             NSString *type = [[NSFileManager defaultManager] typeOfFile:path];
             
             // rich text
-        if (UTTypeConformsTo((CFStringRef)[iObject fileUTI], (CFStringRef)@"public.rtf") || [richTextTypes containsObject:type]) {
+        if (UTTypeConformsTo((__bridge CFStringRef)[iObject fileUTI], (__bridge CFStringRef)@"public.rtf") || [richTextTypes containsObject:type]) {
                 NSDictionary *docAttributes = nil;
                 NSError *error = nil;
                 NSMutableAttributedString *astring = [[NSMutableAttributedString alloc] initWithURL:[NSURL fileURLWithPath:path]
@@ -101,8 +135,8 @@
                                                                                               error:&error];
                 NSDictionary *attributes = [astring attributesAtIndex:atBeginning ? 0 : [astring length]-1
                                                        effectiveRange:nil];
-                NSAttributedString *newlineString = [[[NSAttributedString alloc] initWithString:@"\n" attributes:attributes] autorelease];
-                NSAttributedString *appendString = [[[NSAttributedString alloc] initWithString:newLine  attributes:attributes] autorelease];
+                NSAttributedString *newlineString = [[NSAttributedString alloc] initWithString:@"\n" attributes:attributes];
+                NSAttributedString *appendString = [[NSAttributedString alloc] initWithString:newLine  attributes:attributes];
                 
                 if (atBeginning) {
                     [astring insertAttributedString:newlineString atIndex:0];
@@ -121,7 +155,7 @@
                 if (!error)
                     [wrapper writeToFile:path atomically:NO updateFilenames:YES];
                 
-        } else if (UTTypeConformsTo((CFStringRef)[iObject fileUTI], (CFStringRef)@"public.text") || [textTypes containsObject:type]) {
+        } else if (UTTypeConformsTo((__bridge CFStringRef)[iObject fileUTI], (__bridge CFStringRef)@"public.text") || [textTypes containsObject:type]) {
                 NSStringEncoding encoding;
                 NSString *text = [NSString stringWithContentsOfFile:path usedEncoding:&encoding error:nil];
                 if (atBeginning || ![text length]) {
@@ -157,7 +191,7 @@
     
     string = [string stringByReplacing:@"\n" with:@"\r"];
     
-    NSMutableArray *lines = [[[string componentsSeparatedByString:@"\r"] mutableCopy] autorelease];
+    NSMutableArray *lines = [[string componentsSeparatedByString:@"\r"] mutableCopy];
     
     NSString *fileLine = [lines objectAtIndex:lineNum];
     
@@ -180,7 +214,7 @@
     
     NSStringEncoding encoding;
     NSString *string = [NSString stringWithContentsOfFile:file usedEncoding:&encoding error:nil];
-    NSMutableArray *lines = [[[string lines] mutableCopy] autorelease];
+    NSMutableArray *lines = [[string lines] mutableCopy];
     
     
     NSString *fileLine = [lines objectAtIndex:lineNum];
