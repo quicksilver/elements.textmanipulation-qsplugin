@@ -129,10 +129,7 @@
         if (UTTypeConformsTo((__bridge CFStringRef)[iObject fileUTI], (__bridge CFStringRef)@"public.rtf") || [richTextTypes containsObject:type]) {
                 NSDictionary *docAttributes = nil;
                 NSError *error = nil;
-                NSMutableAttributedString *astring = [[NSMutableAttributedString alloc] initWithURL:[NSURL fileURLWithPath:path]
-                                                                                            options:nil
-                                                                                 documentAttributes:&docAttributes
-                                                                                              error:&error];
+			NSMutableAttributedString *astring = [[NSMutableAttributedString alloc] initWithURL:[NSURL fileURLWithPath:path] options:@{} documentAttributes:&docAttributes error:&error];
                 NSDictionary *attributes = [astring attributesAtIndex:atBeginning ? 0 : [astring length]-1
                                                        effectiveRange:nil];
                 NSAttributedString *newlineString = [[NSAttributedString alloc] initWithString:@"\n" attributes:attributes];
@@ -189,7 +186,7 @@
     NSStringEncoding encoding;
     NSString *string = [NSString stringWithContentsOfFile:file usedEncoding:&encoding error:nil];
     
-    string = [string stringByReplacing:@"\n" with:@"\r"];
+    string = [string stringByReplacingOccurrencesOfString:@"\n" withString:@"\r"];
     
     NSMutableArray *lines = [[string componentsSeparatedByString:@"\r"] mutableCopy];
     
