@@ -39,7 +39,17 @@
     // for the Change To... select the current line to be changed
 	if ([action isEqualToString:kQSLineRefEditAction]) {
         return [NSArray arrayWithObject:[QSObject textProxyObjectWithDefaultValue:[dObject stringValue]]]; 
-    } else {
+	} else if ([@[kQSTextPrependAction, kQSTextPrependTimedAction, kQSTextAppendAction, kQSTextAppendTimedAction] containsObject:action]) {
+        NSArray *fileObjects = [[QSLibrarian sharedInstance] arrayForType:QSFilePathType];
+        
+        NSIndexSet *folderIndexes = [fileObjects indexesOfObjectsWithOptions:NSEnumerationConcurrent passingTest:^BOOL(QSObject *thisObject, NSUInteger i, BOOL *stop) {
+            QSObject *resolved = [thisObject resolvedAliasObject];
+			NSString *fileExtension = [[resolved fileExtension] lowercaseString];
+			return [textTypes containsObject:fileExtension] || [richTextTypes containsObject:fileExtension];
+        }];
+        
+        return [fileObjects objectsAtIndexes:folderIndexes];
+	} else {
         if ([self.reverseActions containsObject:action]) {
             return @[[QSObject textProxyObjectWithDefaultValue:@""]];
         }
