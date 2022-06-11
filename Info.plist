@@ -17,9 +17,9 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.3.0</string>
+	<string>1.3.1</string>
 	<key>CFBundleVersion</key>
-	<string>88</string>
+	<string>90</string>
 	<key>QSActions</key>
 	<dict>
 		<key>QSLineRefDeleteAction</key>
@@ -73,7 +73,7 @@
 			</array>
 			<key>indirectTypes</key>
 			<array>
-				<string>public.text</string>
+				<string>NSFilenamesPboardType</string>
 			</array>
 			<key>name</key>
 			<string>Append To…</string>
@@ -97,7 +97,7 @@
 				<string>rtf</string>
 				<string>rtfd</string>
 				<string>doc</string>
-				<string>'TEXT'</string>
+				<string>&apos;TEXT&apos;</string>
 				<string>md</string>
 				<string>markdown</string>
 				<string>mdown</string>
@@ -153,7 +153,7 @@
 				<string>rtf</string>
 				<string>rtfd</string>
 				<string>doc</string>
-				<string>'TEXT'</string>
+				<string>&apos;TEXT&apos;</string>
 				<string>md</string>
 				<string>markdown</string>
 				<string>mdown</string>
@@ -214,7 +214,7 @@
 				<string>rtf</string>
 				<string>doc</string>
 				<string>rtfd</string>
-				<string>'TEXT'</string>
+				<string>&apos;TEXT&apos;</string>
 				<string>md</string>
 				<string>markdown</string>
 				<string>mdown</string>
@@ -272,7 +272,7 @@
 				<string>rtf</string>
 				<string>doc</string>
 				<string>rtfd</string>
-				<string>'TEXT'</string>
+				<string>&apos;TEXT&apos;</string>
 				<string>md</string>
 				<string>markdown</string>
 				<string>mdown</string>
@@ -318,12 +318,12 @@ or /). This action is reversible. You can:&lt;/p&gt;
 &lt;li&gt;[Some File] ⇥ Append Text… ⇥ [Some Text]&lt;/li&gt;
 &lt;li&gt;[Some Text] ⇥ Append To… ⇥ [Some File]&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;You should note that these actions can use Quicksilver's “smart” ability to place any item, object or file inside a text file. If you append an image to a text file, the path of the image is added, or similarly for web addresses (URLs). When entering a text file (→ or /), these lines are automatically resolved by Quicksilver into the original file, URL etc.&lt;/p&gt;
+&lt;p&gt;You should note that these actions can use Quicksilver&apos;s “smart” ability to place any item, object or file inside a text file. If you append an image to a text file, the path of the image is added, or similarly for web addresses (URLs). When entering a text file (→ or /), these lines are automatically resolved by Quicksilver into the original file, URL etc.&lt;/p&gt;
 &lt;p&gt;This gives you a convenient way to store and retrieve any file or piece of information within a text file, using nothing but Quicksilver.&lt;/p&gt;
 &lt;/dd&gt;
 &lt;dt&gt;Prepend Text… and Prepend To…&lt;/dt&gt;
 &lt;dd&gt;
-&lt;p&gt;This action works in a similar manner to the 'Append' actions, but puts a line of text at the start of the file. The action is also reversible.&lt;/p&gt;
+&lt;p&gt;This action works in a similar manner to the &apos;Append&apos; actions, but puts a line of text at the start of the file. The action is also reversible.&lt;/p&gt;
 &lt;/dd&gt;
 &lt;dt&gt;Change To…&lt;/dt&gt;
 &lt;dd&gt;
@@ -335,7 +335,7 @@ or /). This action is reversible. You can:&lt;/p&gt;
 &lt;/dd&gt;
 &lt;/dl&gt;
 &lt;h4&gt;Timestamps&lt;/h4&gt;
-&lt;p&gt;All of the Append/Prepend actions have alternates that will include a timestamp at the beginning of the line. The timestamp's format is taken from the “Short” format for Date and Time in System Preferences, so you can customize it there.&lt;/p&gt;</string>
+&lt;p&gt;All of the Append/Prepend actions have alternates that will include a timestamp at the beginning of the line. The timestamp&apos;s format is taken from the “Short” format for Date and Time in System Preferences, so you can customize it there.&lt;/p&gt;</string>
 		<key>icon</key>
 		<string>ClippingText</string>
 		<key>relatedBundles </key>
