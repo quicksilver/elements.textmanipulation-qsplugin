@@ -45,10 +45,10 @@
         NSIndexSet *folderIndexes = [fileObjects indexesOfObjectsWithOptions:NSEnumerationConcurrent passingTest:^BOOL(QSObject *thisObject, NSUInteger i, BOOL *stop) {
             QSObject *resolved = [thisObject resolvedAliasObject];
 			NSString *fileExtension = [[resolved fileExtension] lowercaseString];
-			return [textTypes containsObject:fileExtension] || [richTextTypes containsObject:fileExtension];
+			return [resolved isFolder] || [textTypes containsObject:fileExtension] || [richTextTypes containsObject:fileExtension];
         }];
         
-        return [fileObjects objectsAtIndexes:folderIndexes];
+        return [@[[NSNull null]] arrayByAddingObjectsFromArray:[fileObjects objectsAtIndexes:folderIndexes]];
 	} else {
         if ([self.reverseActions containsObject:action]) {
             return @[[QSObject textProxyObjectWithDefaultValue:@""]];
@@ -98,6 +98,7 @@
 
 - (QSObject *)appendObject:(QSObject *)dObject toObject:(QSObject *)iObject withTimestamp:(BOOL)includeTime atBeginning:(BOOL)atBeginning
 {
+	NSMutableArray *lines = [NSMutableArray array];
 	NSString *newLine = nil;
     NSString *timestamp = includeTime ? [self.dateFormatter stringFromDate:[NSDate date]] : nil;
     for (QSObject *anObject in [dObject splitObjects]) {
@@ -114,70 +115,71 @@
         if (includeTime) {
             newLine = [NSString stringWithFormat:@"%@ %@", timestamp, newLine];
         }
-        
-        // if we're within a file (QSLineReferenceType file)
-        if ([iObject containsType:@"QSLineReferenceType"]) {
-            
-            NSDictionary *reference = [iObject objectForType:@"QSLineReferenceType"];
-            NSString *file = [[reference objectForKey:@"path"] stringByStandardizingPath];
-            NSStringEncoding encoding;
-
-            NSString *string = [NSString stringWithContentsOfFile:file usedEncoding:&encoding error:nil];
-            NSMutableArray *lines = [[string lines] mutableCopy];
-            NSUInteger lineIndex = [[reference objectForKey:@"line"] unsignedIntegerValue];
-            if (atBeginning) {
-                lineIndex--;
-            }
-            [lines insertObject:newLine atIndex:lineIndex];
-            
-            [[lines componentsJoinedByString:@"\n"] writeToFile:file atomically:NO encoding:encoding error:nil];
-        } else {
-            NSString *path = [iObject singleFilePath];
-            NSString *type = [[NSFileManager defaultManager] typeOfFile:path];
-            
-            // rich text
-        if (UTTypeConformsTo((__bridge CFStringRef)[iObject fileUTI], (__bridge CFStringRef)@"public.rtf") || [richTextTypes containsObject:type]) {
-                NSDictionary *docAttributes = nil;
-                NSError *error = nil;
+		[lines addObject:newLine];
+	}
+	newLine = [lines componentsJoinedByString:@"\n"];
+	// if we're within a file (QSLineReferenceType file)
+	if ([iObject containsType:@"QSLineReferenceType"]) {
+		
+		NSDictionary *reference = [iObject objectForType:@"QSLineReferenceType"];
+		NSString *file = [[reference objectForKey:@"path"] stringByStandardizingPath];
+		NSStringEncoding encoding;
+		
+		NSString *string = [NSString stringWithContentsOfFile:file usedEncoding:&encoding error:nil];
+		NSMutableArray *lines = [[string lines] mutableCopy];
+		NSUInteger lineIndex = [[reference objectForKey:@"line"] unsignedIntegerValue];
+		if (atBeginning) {
+			lineIndex--;
+		}
+		[lines insertObject:newLine atIndex:lineIndex];
+		
+		[[lines componentsJoinedByString:@"\n"] writeToFile:file atomically:NO encoding:encoding error:nil];
+	} else {
+		NSString *path = [iObject singleFilePath];
+		NSString *type = [[NSFileManager defaultManager] typeOfFile:path];
+		
+		// rich text
+		if (UTTypeConformsTo((__bridge CFStringRef)[iObject fileUTI], (__bridge CFStringRef)@"public.rtf") || [richTextTypes containsObject:type]) {
+			NSDictionary *docAttributes = nil;
+			NSError *error = nil;
 			NSMutableAttributedString *astring = [[NSMutableAttributedString alloc] initWithURL:[NSURL fileURLWithPath:path] options:@{} documentAttributes:&docAttributes error:&error];
-                NSDictionary *attributes = [astring attributesAtIndex:atBeginning ? 0 : [astring length]-1
-                                                       effectiveRange:nil];
-                NSAttributedString *newlineString = [[NSAttributedString alloc] initWithString:@"\n" attributes:attributes];
-                NSAttributedString *appendString = [[NSAttributedString alloc] initWithString:newLine  attributes:attributes];
-                
-                if (atBeginning) {
-                    [astring insertAttributedString:newlineString atIndex:0];
-                    [astring insertAttributedString:appendString atIndex:0];
-                } else {
-                    unichar lastChar = [[astring string] characterAtIndex:[astring length] - 1];
-                    BOOL newlineAtEnd = lastChar == '\r' || lastChar == '\n';
-                    if (!newlineAtEnd) [astring appendAttributedString:newlineString];
-                    [astring appendAttributedString:appendString];
-                    if (newlineAtEnd) [astring appendAttributedString:newlineString];
-                }
-                
-                NSFileWrapper *wrapper = [astring fileWrapperFromRange:NSMakeRange(0, [astring length])
-                                                    documentAttributes:docAttributes error:&error];
-                
-                if (!error)
-                    [wrapper writeToFile:path atomically:NO updateFilenames:YES];
-                
-        } else if (UTTypeConformsTo((__bridge CFStringRef)[iObject fileUTI], (__bridge CFStringRef)@"public.text") || [textTypes containsObject:type]) {
-                NSStringEncoding encoding;
-                NSString *text = [NSString stringWithContentsOfFile:path usedEncoding:&encoding error:nil];
-                if (atBeginning || ![text length]) {
-                    text = [NSString stringWithFormat:@"%@\n%@", newLine , text];  
-                } else {
-                    unichar lastChar = [text characterAtIndex:[text length] -1];
-                    BOOL newlineAtEnd = lastChar == '\r' || lastChar == '\n';
-                    text = [NSString stringWithFormat:newlineAtEnd?@"%@%@\n":@"%@\n%@", text, newLine];
-                }
-                [text writeToFile:path atomically:NO encoding:encoding error:nil];
-            } else {
-                QSShowAppNotifWithAttributes(@"QSTextManipulation", NSLocalizedStringFromTableInBundle(@"Error Appending Text", nil, [NSBundle bundleForClass:[self class]], @"Title for the error notif when appending text fails"), [NSString stringWithFormat:NSLocalizedStringFromTableInBundle(@"Cannot append text to %@ files", nil, [NSBundle bundleForClass:[self class]], @"MEssage of the error notif when appending text fails"),type]);
-            }
-        }
-    }
+			NSDictionary *attributes = [astring attributesAtIndex:atBeginning ? 0 : [astring length]-1
+												   effectiveRange:nil];
+			NSAttributedString *newlineString = [[NSAttributedString alloc] initWithString:@"\n" attributes:attributes];
+			NSAttributedString *appendString = [[NSAttributedString alloc] initWithString:newLine  attributes:attributes];
+			
+			if (atBeginning) {
+				[astring insertAttributedString:newlineString atIndex:0];
+				[astring insertAttributedString:appendString atIndex:0];
+			} else {
+				unichar lastChar = [[astring string] characterAtIndex:[astring length] - 1];
+				BOOL newlineAtEnd = lastChar == '\r' || lastChar == '\n';
+				if (!newlineAtEnd) [astring appendAttributedString:newlineString];
+				[astring appendAttributedString:appendString];
+				if (newlineAtEnd) [astring appendAttributedString:newlineString];
+			}
+			
+			NSFileWrapper *wrapper = [astring fileWrapperFromRange:NSMakeRange(0, [astring length])
+												documentAttributes:docAttributes error:&error];
+			
+			if (!error)
+				[wrapper writeToFile:path atomically:NO updateFilenames:YES];
+			
+		} else if (UTTypeConformsTo((__bridge CFStringRef)[iObject fileUTI], (__bridge CFStringRef)@"public.text") || [textTypes containsObject:type]) {
+			NSStringEncoding encoding;
+			NSString *text = [NSString stringWithContentsOfFile:path usedEncoding:&encoding error:nil];
+			if (atBeginning || ![text length]) {
+				text = [NSString stringWithFormat:@"%@\n%@", newLine , text];
+			} else {
+				unichar lastChar = [text characterAtIndex:[text length] -1];
+				BOOL newlineAtEnd = lastChar == '\r' || lastChar == '\n';
+				text = [NSString stringWithFormat:newlineAtEnd?@"%@%@\n":@"%@\n%@", text, newLine];
+			}
+			[text writeToFile:path atomically:NO encoding:encoding error:nil];
+		} else {
+			QSShowAppNotifWithAttributes(@"QSTextManipulation", NSLocalizedStringFromTableInBundle(@"Error Appending Text", nil, [NSBundle bundleForClass:[self class]], @"Title for the error notif when appending text fails"), [NSString stringWithFormat:NSLocalizedStringFromTableInBundle(@"Cannot append text to %@ files", nil, [NSBundle bundleForClass:[self class]], @"MEssage of the error notif when appending text fails"),type]);
+		}
+	}
     if ([iObject containsType:@"QSLineReferenceType"]) {
         // if it's a line type, return the original file (get it from the object's 'path' key)
         return [QSObject fileObjectWithPath:[[[iObject objectForType:@"QSLineReferenceType"] objectForKey:@"path"] stringByStandardizingPath]];
